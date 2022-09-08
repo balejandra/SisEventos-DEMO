@@ -1,0 +1,316 @@
+#progressbar {
+    margin-bottom: 30px;
+    overflow: hidden;
+    /*CSS counters to number the steps*/
+    counter-reset: step;
+}
+#progressbar li {
+    list-style-type: none;
+    color: #8b9ab0;
+    text-transform: uppercase;
+    font-size: 9px;
+    width: 25%;
+    float: left;
+    position: relative;
+    text-align: center;
+}
+#progressbar li.active {
+    color: #003B74 !important;
+}
+#progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 90px;
+    line-height: 40px;
+    display: block;
+    font-size: 10px;
+    color: #333;
+    border-radius: 3em;
+    margin: 0 auto 5px auto;
+    text-align: center;
+    background-color: #CECECE;
+}
+
+#progressbar li:after {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background: white;
+    position: absolute;
+    left: -50%;
+    top: 9px;
+    z-index: -1;
+}
+#progressbar li:first-child:after {
+    content: none;
+}
+
+#progressbar li.active:before,  #progressbar li.active:after{
+    background: #003B74;
+    color: white;
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #002656;
+    animation: spin2 1s ease infinite;
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+.bg-zarpes{
+    background: #003B74 !important;
+}
+
+.btncancelarZarpes{
+    background-color: #8b9ab0 !important;
+    color:#333 !important;
+    font: bold !important;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+.form {
+    max-width: 250px;
+    font-size: 18px;
+    font-weight: 600;
+}
+.card-norma{
+    padding: 1px;
+}
+.text-norma{
+    font-size: 16px;
+    background: whitesmoke;
+    text-align: justify;
+}
+.card-acepto{
+    background: #d5d5d5;
+}
+div.container { max-width: 1200px }
+
+
+.document-link {
+
+    text-decoration: none;
+    color: #39f;
+}
+
+[href$=".pdf"]::after {
+    font-family: "Font Awesome 5 Free";
+    content: '  \f1c1';
+    color: red;
+}
+
+[href$=".png"]::after, [href$=".jpg"]::after , [href$=".gif"]::after, [href$=".bmp"]::after, [href$=".jpeg"]::after, [href$=".tif"]::after {
+    font-family: "Font Awesome 5 Free";
+    content: '  \f03e';
+    color: green;
+}
+
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem auto;
+    box-shadow: 0 3px 7px -1px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.6%;
+    background: #4d4b4b;
+    line-height: 1.4;
+    font-family: sans-serif;
+    border-radius: 5px;
+    overflow: hidden;
+    z-index: 0;
+}
+.blog-card .meta {
+    position: relative;
+    z-index: 0;
+    height: 200px;
+}
+.blog-card .description {
+    padding: 1rem;
+    background: #4d4b4b;
+    position: relative;
+    z-index: 1;
+}
+.blog-card .description .read-more {
+    text-align: right;
+}
+
+@media (min-width: 640px) {
+    .blog-card {
+        flex-direction: row;
+        max-width: 700px;
+    }
+    .blog-card .meta {
+        flex-basis: 130%;
+        height: auto;
+    }
+    .blog-card .description {
+        flex-basis: 60%;
+    }
+    .blog-card .description:before {
+        transform: skewX(-3deg);
+        content: "";
+        background: #4d4b4b;
+        width: 30px;
+        position: absolute;
+        left: -10px;
+        top: 0;
+        bottom: 0;
+        z-index: -1;
+    }
+    .blog-card.alt {
+        flex-direction: row-reverse;
+    }
+    .blog-card.alt .description:before {
+        left: inherit;
+        right: -10px;
+        transform: skew(3deg);
+    }
+    .blog-card.alt .details {
+        padding-left: 25px;
+    }
+}
+
+.toggle{
+    --uiToggleSize: var(--toggleSize, 1.25rem);
+    --uiToggleBorderWidth: var(--toggleBorderWidth, 2px);
+    --uiToggleColor: var(--toggleColor, #fff);
+
+    display: var(--toggleDisplay, inline-flex);
+    position: relative;
+}
+
+.toggle__input{
+    width: var(--uiToggleSize);
+    height: var(--uiToggleSize);
+    opacity: 0;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+}
+
+.toggle__label{
+    display: inline-flex;
+    min-height: var(--uiToggleSize);
+    padding-left: calc(var(--uiToggleSize) + var(--toggleIndent, .4em));
+}
+
+.toggle__input:not(:disabled) ~ .toggle__label{
+    cursor: pointer;
+}
+
+.toggle__label::after{
+    content: "";
+    box-sizing: border-box;
+    width: 1em;
+    height: 1em;
+    font-size: var(--uiToggleSize); /* 1 */
+
+    background-color: transparent;
+    border: var(--uiToggleBorderWidth) solid var(--uiToggleColor);
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+}
+
+.toggle__input:checked ~ .toggle__label::after{
+    background-color: var(--uiToggleColor);
+}
+.toggle__input:checked ~ .toggle__label{
+    color: white;
+}
+
+.toggle__text{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.toggle__label::before{
+    content: "";
+    width: 0;
+    height: 0;
+    font-size: var(--uiToggleSize); /* 1 */
+
+    border-left-width: 0;
+    border-bottom-width: 0;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-color: var(--toggleArrowColor, #000);
+
+    position: absolute;
+    top: .5428em;
+    left: .25em;
+    z-index: 3;
+
+    transform-origin: left top;
+    transform: rotate(-40deg) skew(10deg);
+}
+
+.toggle__input:checked ~ .toggle__label::before{
+    --uiToggleArrowWidth: var(--toggleArrowWidth, 2px);
+
+    width: .4em;
+    height: .2em;
+    border-left-width: var(--uiToggleArrowWidth);
+    border-bottom-width: var(--uiToggleArrowWidth);
+}
+
+.toggle:focus-within{
+    outline: var(--toggleOutlineWidthFocus, 3px) solid var(--toggleOutlineColorFocus, currentColor);
+    outline-offset: var(--toggleOutlineOffsetFocus, 5px);
+}
+.toggle__label::after{
+    border-radius: var(--toggleBorderRadius, 2px);
+}
+
+.toggle__input:not(:disabled) ~ .toggle__label::before{
+    will-change: width, height;
+    opacity: 0;
+}
+
+.toggle__input:not(:disabled):checked ~ .toggle__label::before{
+    opacity: 1;
+    transition: opacity .1s ease-out .15s, width .1s ease-out .3s, height .1s ease-out .2s;
+}
+
+.toggle__input:not(:disabled) ~ .toggle__label::after{
+    will-change: background-color;
+    transition: background-color .15s ease-out;
+}
+
+.page__custom-settings{
+    --toggleColor: #fff;
+    --toggleOutlineColorFocus: #fff;
+    --toggleSize: 2rem;
+    color: #f0f0f0;
+}
+
+.title-estadia{
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+.title-inea{
+    color:#003B74 !important;
+}

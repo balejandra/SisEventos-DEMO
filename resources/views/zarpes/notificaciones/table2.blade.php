@@ -1,0 +1,47 @@
+<style>
+    table.dataTable {
+        margin: 0 auto;
+    }
+</style>
+<table class="table table-hover table-bordered table-grow" id="generic-table2" style="width:90%">
+    <thead>
+    <th>Título</th>
+    <th>Tipo</th>
+    <th>Fecha</th>
+    <th>Acciones</th>
+    </thead>
+    <tbody>
+    @foreach($notificacionesInternacional as $notificacion)
+        @if($notificacion->visto==false)
+        <tr style="background-color:#FCF4D4;">
+        @else
+        <tr>
+        @endif
+            @if (strpos($notificacion->titulo, 'Rescate') !== false)
+                <td class="text-danger">{{ $notificacion->titulo }}</td>
+            @else
+                <td>{{ $notificacion->titulo }}</td>
+            @endif
+            <td>
+                {{$notificacion->tipo}}
+            </td>
+            <td>
+                @php
+                    $fecha=explode(' ',$notificacion->created_at);
+                    list($ano, $mes, $dia) =explode('-',$fecha[0]);
+
+                    $fechaCreado=$dia."/".$mes."/".$ano." ".$fecha[1];
+
+                @endphp
+            {{ $fechaCreado }}</td>
+            <td>
+            @can('consultar-notificaciones')
+                <a class="btn btn-sm btn-primary" href=" {{route('notificaciones.show',$notificacion->id)}}">
+                        <i class="fa fa-search"></i>
+                </a>
+            @endcan
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
