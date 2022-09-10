@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVisitaPermisoEstadiasTable extends Migration
+class CreateDocumentosAutorizacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateVisitaPermisoEstadiasTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_zarpes_schema')->create('visita_permiso_estadias', function (Blueprint $table) {
+        Schema::create('documentos_autorizaciones', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('permiso_estadia_id');
-            $table->foreign('permiso_estadia_id')->references('id')->on('permiso_estadias')
+            $table->bigInteger('autorizacion_evento_id');
+            $table->foreign('autorizacion_evento_id')->references('id')->on('autorizaciones_eventos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->string('nombre_visitador');
-            $table->date('fecha_visita')->nullable();
+            $table->string('recaudo');
+            $table->string('documento');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -33,6 +33,6 @@ class CreateVisitaPermisoEstadiasTable extends Migration
      */
     public function down()
     {
-        Schema::connection('pgsql_zarpes_schema')->dropIfExists('visita_permiso_estadias');
+        Schema::dropIfExists('documentos_autorizaciones');
     }
 }

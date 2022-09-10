@@ -7,20 +7,32 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
-class Paise extends Model implements Auditable
+/**
+ * Class Tasa
+ * @package App\Models
+ * @version September 9, 2022, 7:30 pm -04
+ *
+ * @property string $tipo_actividad
+ * @property number $valor
+ * @property string $parametro
+ */
+class Tasa extends Model implements Auditable
 {
     use SoftDeletes;
     use \OwenIt\Auditing\Auditable;
     use HasFactory;
 
-    public $table = 'paises';
-    protected $connection = 'pgsql_public_schema';
+    public $table = 'tasas';
+
 
     protected $dates = ['deleted_at'];
 
+
+
     public $fillable = [
-        'iso',
-        'name'
+        'tipo_actividad',
+        'valor',
+        'parametro'
     ];
 
     /**
@@ -30,9 +42,9 @@ class Paise extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
-        'iso' => 'string',
-        'name' => 'string',
-
+        'tipo_actividad' => 'string',
+        'valor' => 'double',
+        'parametro' => 'string'
     ];
 
     /**
@@ -41,7 +53,10 @@ class Paise extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-        'iso' => 'required',
-        'name' => 'required',
+        'tipo_actividad' => 'required',
+        'valor' => 'required',
+        'parametro' => 'required'
     ];
+
+
 }

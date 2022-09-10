@@ -8,7 +8,7 @@ use App\Models\Publico\Departamento;
 use App\Models\Renave\Renave_data;
 use App\Models\Transaccion;
 use App\Models\SATIM\Pasajero;
-use App\Models\SATIM\PermisoEstadia;
+use App\Models\SATIM\AutorizacionEvento;
 use App\Models\SATIM\PermisoZarpe;
 use App\Models\SATIM\Tripulante;
 use App\Models\SATIM\EstablecimientoNautico;
@@ -24,7 +24,7 @@ class PdfGeneratorController extends Controller
     public function imprimir($id){
         $zarpe= PermisoZarpe::find($id);
         if ($zarpe->bandera=='extranjera') {
-            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+            $buque=AutorizacionEvento::where('id',$zarpe->permiso_estadia_id)->first();
         }else {
             $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
         }
@@ -65,7 +65,7 @@ class PdfGeneratorController extends Controller
         return $pdf->stream('zarpes.pdf');
     }
     public function imprimirEstadia($id){
-        $estadia=PermisoEstadia::find($id);
+        $estadia=AutorizacionEvento::find($id);
         $capitania= Departamento::where('id',$estadia->capitania_id)->first();
         $pdf=PDF::loadView('PDF.estadias.permiso',compact('estadia','capitania'));
         return $pdf->stream('estadia.pdf');
@@ -74,7 +74,7 @@ class PdfGeneratorController extends Controller
     public function correo($id){
         $zarpe= PermisoZarpe::find($id);
         if ($zarpe->bandera=='extranjera') {
-            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+            $buque=AutorizacionEvento::where('id',$zarpe->permiso_estadia_id)->first();
         }else {
             $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
         }
@@ -116,7 +116,7 @@ class PdfGeneratorController extends Controller
     }
 
     public function correoEstadia($id){
-       $estadia=PermisoEstadia::find($id);
+       $estadia=AutorizacionEvento::find($id);
         $capitania= Departamento::where('id',$estadia->capitania_id)->first();
         $pdf=PDF::loadView('PDF.estadias.permiso', compact('estadia','capitania'))->stream();
         return $pdf;
@@ -126,7 +126,7 @@ class PdfGeneratorController extends Controller
     public function imprimirInternacional($id){
         $zarpe= PermisoZarpe::find($id);
         if ($zarpe->bandera=='extranjera') {
-            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+            $buque=AutorizacionEvento::where('id',$zarpe->permiso_estadia_id)->first();
         }else {
             $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
         }
@@ -155,7 +155,7 @@ class PdfGeneratorController extends Controller
     public function correoZI($id){
         $zarpe= PermisoZarpe::find($id);
         if ($zarpe->bandera=='extranjera') {
-            $buque=PermisoEstadia::where('id',$zarpe->permiso_estadia_id)->first();
+            $buque=AutorizacionEvento::where('id',$zarpe->permiso_estadia_id)->first();
         }else {
             $buque=Renave_data::where('matricula_actual',$zarpe->matricula)->first();
         }

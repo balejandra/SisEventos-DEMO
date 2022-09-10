@@ -17,13 +17,12 @@ use Spatie\Permission\Models\Role;
  * @package App\Models
  * @version February 19, 2022, 9:36 pm UTC
  *
- * @property string $cargo
+ * @property string $cargo_id
  * @property string $user_id
- * @property string $capitania_id
- * @property string $establecimiento_nautico_id
+ * @property string $departamento_id
  * @property boolean $habilitado
  */
-class CapitaniaUser extends Model implements Auditable
+class DepartamentoUser extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
@@ -37,10 +36,9 @@ class CapitaniaUser extends Model implements Auditable
 
 
     public $fillable = [
-        'cargo',
+        'cargo_id',
         'user_id',
-        'capitania_id',
-        'establecimiento_nautico_id',
+        'departamento_id',
         'habilitado'
     ];
 
@@ -51,10 +49,9 @@ class CapitaniaUser extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
-        'cargo' => 'string',
+        'cargo_id' => 'string',
         'user_id' => 'string',
-        'capitania_id' => 'string',
-        'establecimiento_nautico_id'=>'string',
+        'departamento_id' => 'string',
         'habilitado'=>'boolean'
     ];
 
@@ -66,13 +63,13 @@ class CapitaniaUser extends Model implements Auditable
     public static $rules = [
         'cargo' => 'required',
         'user_id' => 'required',
-        'capitania_id' => 'required',
+        'departamento_id' => 'required',
         'habilitado'=>'required'
     ];
 
-    public function capitania():\Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function departamento():\Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Departamento::class,'capitania_id','id');
+        return $this->belongsTo(Departamento::class,'departamento_id','id');
     }
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -81,14 +78,6 @@ class CapitaniaUser extends Model implements Auditable
     }
     public function cargos(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(Role::class,'cargo','id');
-    }
-    public function establecimientos()
-    {
-        return $this->belongsTo(EstablecimientoNautico::class,'establecimiento_nautico_id');
-    }
-
-    public function zarperevision(){
-        return $this->hasMany(ZarpeRevision::class);
+        return $this->belongsTo(Role::class,'cargo_id','id');
     }
 }

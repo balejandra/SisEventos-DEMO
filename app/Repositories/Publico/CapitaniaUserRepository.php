@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Publico;
 
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 use App\Repositories\BaseRepository;
 
 /**
@@ -37,6 +37,6 @@ class CapitaniaUserRepository extends BaseRepository
      **/
     public function model()
     {
-        return CapitaniaUser::class;
+        return DepartamentoUser::class;
     }
 }

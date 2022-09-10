@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Zarpes;
 
-use App\Models\SATIM\PermisoEstadia;
+use App\Models\SATIM\AutorizacionEvento;
 use App\Repositories\BaseRepository;
 
 /**
@@ -48,6 +48,6 @@ class PermisoEstadiaRepository extends BaseRepository
      **/
     public function model()
     {
-        return PermisoEstadia::class;
+        return AutorizacionEvento::class;
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Zarpes;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\SATIM\PermisoEstadia;
+use App\Models\SATIM\AutorizacionEvento;
 
 class CreatePermisoEstadiaRequest extends FormRequest
 {
@@ -25,6 +25,6 @@ class CreatePermisoEstadiaRequest extends FormRequest
      */
     public function rules()
     {
-        return PermisoEstadia::$rules;
+        return AutorizacionEvento::$rules;
     }
 }

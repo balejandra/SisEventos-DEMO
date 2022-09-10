@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEstadiaRevisionesTable extends Migration
+class CreateRevisionesAutorizacionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateEstadiaRevisionesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_zarpes_schema')->create('estadia_revisiones', function (Blueprint $table) {
+        Schema::create('revisiones_autorizaciones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('public.users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
-            $table->bigInteger('permiso_estadia_id');
-            $table->foreign('permiso_estadia_id')->references('id')->on('permiso_estadias')
+            $table->bigInteger('autorizacion_evento_id');
+            $table->foreign('autorizacion_evento_id')->references('id')->on('autorizaciones_eventos')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('accion');
@@ -36,6 +36,6 @@ class CreateEstadiaRevisionesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('pgsql_zarpes_schema')->dropIfExists('estadia_revisiones');
+        Schema::dropIfExists('revisiones_autorizaciones');
     }
 }

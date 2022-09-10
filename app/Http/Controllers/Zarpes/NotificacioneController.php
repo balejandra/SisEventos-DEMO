@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Zarpes;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\SATIM\Notificacione;
+use App\Models\SATIM\Notificacion;
 
 class NotificacioneController extends Controller
 {
@@ -21,10 +21,10 @@ class NotificacioneController extends Controller
     public function index()
     {
          $userid = auth()->id();
-        $notificacionesNacional = Notificacione::where('user_id', $userid)->where('tipo', 'Zarpe Nacional')->get();
-        $notificacionesInternacional = Notificacione::where('user_id', $userid)->where('tipo', 'Zarpe Internacional')->get();
-        $notificacionesEstadia = Notificacione::where('user_id', $userid)->where('tipo', 'Permiso de Estadía')->get();
-        $notificacionGeneral = Notificacione::where('user_id', $userid)->where('tipo', 'General')->get();
+        $notificacionesNacional = Notificacion::where('user_id', $userid)->where('tipo', 'Zarpe Nacional')->get();
+        $notificacionesInternacional = Notificacion::where('user_id', $userid)->where('tipo', 'Zarpe Internacional')->get();
+        $notificacionesEstadia = Notificacion::where('user_id', $userid)->where('tipo', 'Permiso de Estadía')->get();
+        $notificacionGeneral = Notificacion::where('user_id', $userid)->where('tipo', 'General')->get();
 
 
         $this->statusNotificaciones();
@@ -44,7 +44,7 @@ class NotificacioneController extends Controller
      */
     public function storeNotificaciones($userID, $titulo, $texto, $tipo)
     {
-        $notificacion= new Notificacione;
+        $notificacion= new Notificacion;
         $notificacion->user_id=$userID;
         $notificacion->titulo=$titulo;
         $notificacion->texto=$texto;
@@ -67,7 +67,7 @@ class NotificacioneController extends Controller
         $this->statusNotificaciones();
 
         $userid = auth()->id();
-        $notificacion = Notificacione::where('user_id', $userid)->where('id', $id)->get();
+        $notificacion = Notificacion::where('user_id', $userid)->where('id', $id)->get();
         if (empty($notificacion)) {
             Flash::error('Notificacion no encontrado');
             return redirect(route('notificaciones.index'));
@@ -82,7 +82,7 @@ class NotificacioneController extends Controller
     public function statusNotificaciones()
     {
         $userid = auth()->id();
-        $notificaciones = Notificacione::where('user_id', $userid)->where('visto', false)->get();
+        $notificaciones = Notificacion::where('user_id', $userid)->where('visto', false)->get();
         if(count($notificaciones)>0){
             session(['notificaciones' => count($notificaciones)]);
         }else{

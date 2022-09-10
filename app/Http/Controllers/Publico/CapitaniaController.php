@@ -7,7 +7,7 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Requests\Publico\CreateCapitaniaRequest;
 use App\Http\Requests\Publico\UpdateCapitaniaRequest;
 use App\Models\Publico\Departamento;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 use App\Models\User;
 use App\Repositories\Publico\CapitaniaRepository;
 use Illuminate\Http\Request;
@@ -92,7 +92,7 @@ class CapitaniaController extends AppBaseController
 
         $capitania = $this->capitaniaRepository->create($input);
         $rolecapitan= Role::find(4);
-        $capitan_user=new CapitaniaUser();
+        $capitan_user=new DepartamentoUser();
         $capitan_user->cargo=$rolecapitan->name;
         $capitan_user->user_id=$request->capitanes;
         $capitan_user->capitania_id=$capitania['id'];
@@ -132,7 +132,7 @@ class CapitaniaController extends AppBaseController
 
         $coords=CoordenadasCapitania::select(['id','capitania_id', 'latitud', 'longitud'])->where('coordenadas_capitanias.capitania_id', '=', $id)->get();
 
-        $capitan=CapitaniaUser::where('capitania_id', $id)->join('users',  'users.id', '=','capitania_user.user_id')->get();
+        $capitan=DepartamentoUser::where('capitania_id', $id)->join('users',  'users.id', '=','capitania_user.user_id')->get();
         if (empty($capitania)) {
             //Flash::error('Capitania no encontrada');
 
@@ -205,16 +205,16 @@ class CapitaniaController extends AppBaseController
         $capi = $this->capitaniaRepository->update($request->all(), $id);
         $rolecapitan=Role::find(4);
        if ($request->user==0) {
-         $capitan=CapitaniaUser::where('capitania_id',$id)
+         $capitan=DepartamentoUser::where('capitania_id',$id)
              ->where('cargo',$rolecapitan->name)
              ->delete();
        } else{
-           $capitan=CapitaniaUser::where('capitania_id',$id)
+           $capitan=DepartamentoUser::where('capitania_id',$id)
                ->where('cargo',$rolecapitan->name)
                ->first();
           // dd($capitan);
             if (is_null($capitan)) {
-                $capitan= new CapitaniaUser();
+                $capitan= new DepartamentoUser();
                 $capitan->cargo=$rolecapitan->name;
                 $capitan->user_id=$request->user;
                 $capitan->capitania_id=$id;

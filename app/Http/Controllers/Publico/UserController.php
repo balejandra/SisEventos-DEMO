@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Publico;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Publico\UpdateUserRequest;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 use App\Models\Publico\Menu_rol;
 use App\Models\Publico\Saime_cedula;
 use App\Models\User;
@@ -221,7 +221,7 @@ class UserController extends Controller
 
             return redirect(route('users.index'));
         }
-        $capitania=CapitaniaUser::where('user_id',$id)->delete();
+        $capitania=DepartamentoUser::where('user_id',$id)->delete();
         $this->userRepository->delete($id);
 
         Flash::success('Usuario eliminado exitosamente.');

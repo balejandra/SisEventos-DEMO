@@ -8,22 +8,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
 /**
- * Class DocumentoPermisoEstadia
+ * Class DocumentoAutorizacion
  * @package App\Models
  * @version March 10, 2022, 10:35 pm UTC
  *
- * @property unsignedBigInteger $permiso_estadia_id
+ * @property unsignedBigInteger $autorizacion_evento_id
  * @property string $recaudo
  * @property string $documento
  */
-class DocumentoPermisoEstadia extends Model implements Auditable
+class DocumentoAutorizacion extends Model implements Auditable
 {
     use SoftDeletes;
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
-    protected $connection = 'pgsql_zarpes_schema';
-    public $table = 'documento_permiso_estadia';
+    public $table = 'documentos_autorizaciones';
 
 
     protected $dates = ['deleted_at'];
@@ -31,7 +30,7 @@ class DocumentoPermisoEstadia extends Model implements Auditable
 
 
     public $fillable = [
-        'permiso_estadia_id',
+        'autorizacion_evento_id',
         'recaudo',
         'documento'
     ];
@@ -43,7 +42,7 @@ class DocumentoPermisoEstadia extends Model implements Auditable
      */
     protected $casts = [
         'id' => 'integer',
-        'permiso_estadia_id' => 'integer',
+        'autorizacion_evento_id' => 'integer',
         'recaudo' => 'string',
         'documento' => 'string'
     ];
@@ -54,12 +53,12 @@ class DocumentoPermisoEstadia extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-        'permiso_estadia_id' => 'required',
+        'autorizacion_evento_id' => 'required',
         'recaudo' => 'required',
         'documento' => 'required'
     ];
-    public function permisoestadia() {
-        return $this->belongsToMany(PermisoEstadia::class);
+    public function autorizacionevento() {
+        return $this->belongsToMany(AutorizacionEvento::class);
     }
 
 }

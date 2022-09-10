@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Publico;
 
 use App\Http\Requests\Publico\UpdateCapitaniaUserRequest;
 use App\Models\Publico\Departamento;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 use App\Models\User;
 use App\Models\SATIM\EstablecimientoNautico;
 use App\Repositories\Publico\CapitaniaUserRepository;
@@ -105,7 +105,7 @@ class CapitaniaUserController extends AppBaseController
 
         if ($request->habilitado == 1) {
             if (($request->cargo == 5) || ($request->cargo == 6)) {
-                $verification = CapitaniaUser::where('cargo', $request->cargo)->where('establecimiento_nautico_id', $request->establecimiento_nautico_id)
+                $verification = DepartamentoUser::where('cargo', $request->cargo)->where('establecimiento_nautico_id', $request->establecimiento_nautico_id)
                     ->where('habilitado', true)->get();
                 if (isset($verification[0])) {
                     Flash::error('El Establecimiento Náutico ya tiene asignado este Rol.');
@@ -120,7 +120,7 @@ class CapitaniaUserController extends AppBaseController
                 }
             }
             if ($request->cargo==='4') {
-                $verification = CapitaniaUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
+                $verification = DepartamentoUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
                 if (isset($verification[0])) {
                     Flash::error('La Capitanía ya tiene asignado este Rol.');
                     return redirect()->back();
@@ -237,7 +237,7 @@ class CapitaniaUserController extends AppBaseController
           //  dd('aqio');
             if (($request->cargo == 5) || ($request->cargo == 6)) {
 
-                $verification = CapitaniaUser::where('cargo', $request->cargo)->where('establecimiento_nautico_id', $request->establecimiento_nautico_id)
+                $verification = DepartamentoUser::where('cargo', $request->cargo)->where('establecimiento_nautico_id', $request->establecimiento_nautico_id)
                     ->where('habilitado', true)->get();
                 $ver = $verification->except([$id]);
 
@@ -253,7 +253,7 @@ class CapitaniaUserController extends AppBaseController
                 }
             }
             if ($request->cargo==='4') {
-                $verification = CapitaniaUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
+                $verification = DepartamentoUser::where('cargo', $request->cargo)->where('capitania_id', $request->capitania_id)->get();
                 //   dd($verification);
                 $ver = $verification->except([$id]);
                 if (isset($ver[0])) {

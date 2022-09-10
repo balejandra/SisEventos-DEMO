@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCapitaniaUserTable extends Migration
+class CreateDepartamentosUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,21 @@ class CreateCapitaniaUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('capitania_user', function (Blueprint $table) {
+        Schema::create('departamentos_users', function (Blueprint $table) {
             $table->id();
-            $table->string('cargo');
+            $table->unsignedBigInteger('cargo_id');
+            $table->foreign('cargo_id')->references('id')->on('roles')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
-            $table->unsignedBigInteger('capitania_id');
-            $table->foreign('capitania_id')->references('id')->on('capitanias')
+            $table->unsignedBigInteger('departamento_id');
+            $table->foreign('departamento_id')->references('id')->on('departamentos')
                 ->onDelete('restrict')
                 ->onUpdate('restrict');
+            $table->boolean('habilitado')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -36,6 +40,6 @@ class CreateCapitaniaUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('capitania_user');
+        Schema::dropIfExists('departamento_user');
     }
 }

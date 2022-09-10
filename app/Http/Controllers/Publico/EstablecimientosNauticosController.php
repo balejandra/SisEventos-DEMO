@@ -9,7 +9,7 @@ use App\Models\Publico\Departamento;
 use Flash;
 use Response;
 use Spatie\Permission\Models\Role;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 
 
 class EstablecimientosNauticosController extends Controller
@@ -44,7 +44,7 @@ class EstablecimientosNauticosController extends Controller
         $estNautico = EstablecimientoNautico::select('establecimiento_nauticos.*', 'capitanias.nombre as capitania')
         ->Join('public.capitanias', 'capitanias.id', '=', 'capitania_id')->where('establecimiento_nauticos.id', '=', $id)->get();
 
-        $user=CapitaniaUser::select('users.nombres', 'users.apellidos', 'users.email')->Join('public.users', 'users.id', '=', 'user_id')->where('capitania_user.establecimiento_nautico_id', '=', $id)->get();
+        $user=DepartamentoUser::select('users.nombres', 'users.apellidos', 'users.email')->Join('public.users', 'users.id', '=', 'user_id')->where('capitania_user.establecimiento_nautico_id', '=', $id)->get();
 
         if (empty($estNautico)) {
             //Flash::error('Capitania no encontrada');
