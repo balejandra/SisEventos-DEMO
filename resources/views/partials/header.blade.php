@@ -5,10 +5,10 @@
                 </svg>
             </button>
      <a class="header-brand d-md-none" href="#">
-         <img width="118" height="46" src="{{asset('images/logo-inea.svg')}}" alt="">
+        <!-- <img width="118" height="46" src="{{asset('images/logo-inea.svg')}}" alt="">-->
      </a>
             <ul class="header-nav d-none d-md-flex">
-                <strong class="titulo-princ">Sistema de Gestión de Zarpes para Buques Deportivos y de Recreo</strong>
+                <strong class="titulo-princ">Sistema de Solicitud de Permiso de Eventos</strong>
             </ul>
 
             <ul class="header-nav ms-3">

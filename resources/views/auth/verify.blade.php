@@ -8,7 +8,7 @@
 
             <div class="col-md-8">
               <span>
-                    <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">
+                 <!--   <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">-->
                 </span>
                 <div class="card" >
                     <div class="card-body text-center">

@@ -7,7 +7,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
              <span>
-                <img src="{{asset('images/inea.png')}}" alt="inea" class="nav-avatar">
+              <!--  <img src="{{asset('images/inea.png')}}" alt="inea" class="nav-avatar">-->
             </span>
             <div class="card-group">
                 <div class="card p-4">

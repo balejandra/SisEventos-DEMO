@@ -7,7 +7,7 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <span>
-                    <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">
+                 <!--   <img src="{{asset('images/inea.png')}}" alt="inealogo" class="nav-avatar">-->
                 </span>
                 @include('flash::message')
                 @include('coreui-templates::common.errors')
@@ -101,7 +101,7 @@
                                         <input type="date"
                                                class="form-control "
                                                name="fecha_nacimiento" value="{{ old('fecha_nacimiento') }}" id="fecha_nacimiento"
-                                               placeholder="fecha_nacimiento" required onblur="getEmployees($('#numero_identificacion').val(),$('#fecha_nacimiento').val())" >
+                                               placeholder="fecha_nacimiento" required>
                                     </div>
                                 </div>
                                 <div class="w-100 d-none d-md-block"></div>
@@ -209,7 +209,7 @@
                                 </div>
 
                                 <!--////////// BOTON //////////////-->
-                                <button type="submit" class="btn btn-primary btn-block btn-flat" id="btonregister" disabled>{{ __('Register') }}</button>
+                                <button type="submit" class="btn btn-primary btn-block btn-flat" id="btonregister">{{ __('Register') }}</button>
 
                                 <a href="{{ url('/login') }}"
                                    class="text-center  mt-3">{{ __('I already have a membership')}}</a>

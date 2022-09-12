@@ -195,10 +195,10 @@ class RegisterController extends Controller
         return $user;
         }else if($input['tipo_persona']=="juridica"){
             $rif=$input['prefijo']."-".$input['numero_identificacion'];
-            $naviera=AgenciaNavieraVigente::where('rifemp',$rif)->get()->last();
+           // $naviera=AgenciaNavieraVigente::where('rifemp',$rif)->get()->last();
            // $naviera=AgenciaNavieraVigente::all();
            // dd($naviera);
-                if (is_null($naviera)) {
+               // if (is_null($naviera)) {
                     $user = User::create([
                         'nombres' => $input['nombres'],
                         'tipo_identificacion' => $input['tipo_identificacion'],
@@ -213,7 +213,7 @@ class RegisterController extends Controller
                     $user->roles()->sync($role->id);
                     event(new Registered($user));
                     return $user;
-                }else {
+             /*   }else {
                     $user = User::create([
                         'nombres' => $input['nombres'],
                         'tipo_identificacion' => $input['tipo_identificacion'],
@@ -228,11 +228,8 @@ class RegisterController extends Controller
                     $user->roles()->sync($role->id);
                     event(new Registered($user));
                     return $user;
-                }
-
-
+                }*/
         }
     }
-
 
 }

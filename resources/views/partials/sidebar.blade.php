@@ -1,9 +1,9 @@
 
     <div class="sidebar-brand d-none d-md-flex">
         <a href="{{ route('home') }}">
-        <img class="sidebar-brand-full" src="{{asset("images/inea.png")}}" width="30" height="30"
+        <img class="sidebar-brand-full" src="{{asset("images/logo.png")}}" width="30" height="30"
              alt="INEA Logo">
-        <img class="sidebar-brand-narrow" src="{{asset("images/inea.png")}}" width="30" height="30"
+        <img class="sidebar-brand-narrow" src="{{asset("images/logo.png")}}" width="30" height="30"
              alt="INEA Logo">
         </a>
     </div>
