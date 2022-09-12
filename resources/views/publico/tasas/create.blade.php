@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Departamentos
+    Tasas
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -22,24 +22,15 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
-                            <i class="fa fa-building"></i>
-                                <strong>Crear Departamento</strong>
-                                <div class="card-header-actions">
-                                </div>
+                                <i class="fa fa-plus-square-o fa-lg"></i>
+                                <strong>Create Tasa</strong>
                             </div>
                             <div class="card-body">
-                                <div class="row justify-content-center">
+                                {!! Form::open(['route' => 'tasas.store']) !!}
 
-                                    <div class="col-md-8 border rounded p-3">
-                                    {!! Form::open(['route' => 'capitanias.store']) !!}
+                                   @include('tasas.fields')
 
-                                        @include('publico.capitanias.fields')
-
-                                        {!! Form::close() !!}
-                                    </div>
-                                </div>
-
-
+                                {!! Form::close() !!}
                             </div>
                         </div>
                     </div>

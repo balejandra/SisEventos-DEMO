@@ -2,24 +2,24 @@
 
 namespace App\Repositories\Publico;
 
-
-use App\Models\Publico\Departamento;
+use App\Models\Publico\DepartamentoUser;
 use App\Repositories\BaseRepository;
 
 /**
- * Class CapitaniaRepository
+ * Class CapitaniaUserRepository
  * @package App\Repositories
- * @version January 19, 2022, 11:00 pm UTC
+ * @version February 19, 2022, 9:36 pm UTC
 */
 
-class CapitaniaRepository extends BaseRepository
+class DepartamentoUserRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'nombre',
-        'sigla'
+        'cargo',
+        'user_id',
+        'capitania_id'
     ];
 
     /**
@@ -37,6 +37,6 @@ class CapitaniaRepository extends BaseRepository
      **/
     public function model()
     {
-        return Departamento::class;
+        return DepartamentoUser::class;
     }
 }

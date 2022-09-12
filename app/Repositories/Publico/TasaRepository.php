@@ -2,24 +2,25 @@
 
 namespace App\Repositories\Publico;
 
-use App\Models\Publico\DepartamentoUser;
+use App\Models\Publico\Tasa;
 use App\Repositories\BaseRepository;
 
 /**
- * Class CapitaniaUserRepository
+ * Class TasaRepository
  * @package App\Repositories
- * @version February 19, 2022, 9:36 pm UTC
+ * @version September 9, 2022, 7:30 pm -04
 */
 
-class CapitaniaUserRepository extends BaseRepository
+class TasaRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'cargo',
-        'user_id',
-        'capitania_id'
+        'id',
+        'tipo_actividad',
+        'valor',
+        'parametro'
     ];
 
     /**
@@ -37,6 +38,6 @@ class CapitaniaUserRepository extends BaseRepository
      **/
     public function model()
     {
-        return DepartamentoUser::class;
+        return Tasa::class;
     }
 }

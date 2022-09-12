@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Dependencias Federales
+    Departamentos
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -8,9 +8,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{{ route('dependenciasfederales.index') }}">Dependencia Federal</a>
+                    <a href="{!! route('capitanias.index') !!}">Departamento</a>
                 </li>
-                <li class="breadcrumb-item active">Consulta</li>
+                <li class="breadcrumb-item">Crear</li>
             </ol>
         </nav>
     </div>
@@ -22,14 +22,11 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Consultar Dependencia Federal</strong>
-
-                                  <div class="card-header-actions">
-                                    <a href= "{{route('dependenciasfederales.index')}} " class="btn btn-primary btn-sm">Cancelar</a>
-                                </div>
+                                 <strong>Details</strong>
+                                  <a href="{{ route('tasas.index') }}" class="btn btn-light">Back</a>
                              </div>
-                             <div class="card-body" style="min-height:200px;">
-                                 @include('publico.dependencias_federales.show_fields')
+                             <div class="card-body">
+                                 @include('tasas.show_fields')
                              </div>
                          </div>
                      </div>

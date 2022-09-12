@@ -28,7 +28,7 @@ class DepartamentoUser extends Model implements Auditable
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
-    public $table = 'capitania_user';
+    public $table = 'departamentos_users';
 
 
     protected $dates = ['deleted_at'];

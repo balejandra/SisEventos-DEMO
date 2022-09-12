@@ -10,7 +10,7 @@
                 <li class="breadcrumb-item">
                     <a href="{!! route('capitanias.index') !!}">Departamento</a>
                 </li>
-                <li class="breadcrumb-item">Editar</li>
+                <li class="breadcrumb-item">Crear</li>
             </ol>
         </nav>
     </div>
@@ -22,24 +22,15 @@
                  <div class="col-lg-12">
                       <div class="card">
                           <div class="card-header">
-                          <i class="fa fa-building"></i>
-                              <strong>Editar Departamento</strong>
-                              <div class="card-header-actions">
-                              </div>
+                              <i class="fa fa-edit fa-lg"></i>
+                              <strong>Edit Tasa</strong>
                           </div>
                           <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-8 border rounded p-3">
+                              {!! Form::model($tasa, ['route' => ['tasas.update', $tasa->id], 'method' => 'patch']) !!}
 
-                                    {!! Form::model($capitania, ['route' => ['capitanias.update', $capitania->id], 'method' => 'patch']) !!}
+                              @include('tasas.fields')
 
-                                    @include('publico.capitanias.fieldsedit')
-
-                                    {!! Form::close() !!}
-                                </div>
-                                <div class="col-md-2"></div>
-                                </div>
+                              {!! Form::close() !!}
                             </div>
                         </div>
                     </div>

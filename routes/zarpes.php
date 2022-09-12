@@ -94,8 +94,6 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('status', \App\Http\Controllers\Zarpes\StatusController::class);
 
-    Route::resource('equipos', \App\Http\Controllers\Zarpes\EquipoController::class);
-
     Route::get('FindCapitania',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'FindCapitania'])->name('FindCapitania');
 
     Route::get('deleteTripulante',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'deleteTripulante'])->name('deleteTripulante');

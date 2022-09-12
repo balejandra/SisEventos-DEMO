@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Publico;
 
-use App\Models\Publico\Departamento;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Models\Publico\Tasa;
 
-class CreateCapitaniaRequest extends FormRequest
+class CreateTasaRequest extends FormRequest
 {
 
     /**
@@ -25,6 +25,6 @@ class CreateCapitaniaRequest extends FormRequest
      */
     public function rules()
     {
-        return Departamento::$rules;
+        return Tasa::$rules;
     }
 }

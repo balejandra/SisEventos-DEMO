@@ -1,13 +1,16 @@
 @extends('layouts.app')
 @section("titulo")
-{{$titulo}}
+    Departamentos
 @endsection
 @section('content')
     <div class="header-divider"></div>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item"> {{$titulo}}</li>
+                <li class="breadcrumb-item">
+                    <a href="{!! route('capitanias.index') !!}">Departamento</a>
+                </li>
+                <li class="breadcrumb-item">Crear</li>
             </ol>
         </nav>
     </div>
@@ -19,17 +22,15 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                         <i class="fa fa-building"></i>
-                             <strong> {{$titulo}}</strong>
-                              @can('crear-establecimientoNautico')
-                             <div class="card-header-actions">
-                                 <a class="btn btn-primary btn-sm"  href="{{ route('establecimientosNauticos.create') }}">Nuevo</a>
-                                
-                             </div>
-                              @endcan
+                             <i class="fa fa-align-justify"></i>
+                             Tasas
+                             <a class="pull-right" href="{{ route('tasas.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
                          </div>
                          <div class="card-body">
-                             @include('publico.establecimientos_nauticos.table')
+                             @include('publico.tasas.table')
+                              <div class="pull-right mr-3">
+
+                              </div>
                          </div>
                      </div>
                   </div>
