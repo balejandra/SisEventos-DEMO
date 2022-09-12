@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             AdminUserSeeder::class,
             UserExtSeeder::class,
             MenuUserSeeder::class,
-            EquiposSeeder::class,
+            StatusSeeder::class
         ]);
     }
 }

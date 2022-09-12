@@ -24,7 +24,7 @@ class AdminUserSeeder extends Seeder
             'tipo_identificacion'=>'cedula',
             'numero_identificacion'=>'123456789',
             'email_verified_at' => now(),
-            'password' => Hash::make('123456789'), // password
+            'password' => Hash::make('Sist1234'), // password
             'remember_token' => Str::random(10),
             'tipo_usuario' => 'Usuario Interno'
 

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('error', function (){
-    return view('auth.error'); //seccion de validacion de autehticación de usuario
+    return view('errors.error_rol_inex'); //seccion de validacion de autehticación de usuario
 })->name('error');
 
 Route::middleware(['auth' , 'verified'])->group(function () {
@@ -85,7 +85,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('validarMarino',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validarMarino'])->name('validarMarino');
 
     Route::get('validacionMarino',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validacionMarino'])->name('validacionMarino');
-    
+
     Route::get('marinoExtranjero',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'marinoExtranjero'])->name('marinoExtranjero');
 
     Route::get('validacionJerarquizacion',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'validacionJerarquizacion'])->name('validacionJerarquizacion');
@@ -105,7 +105,7 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('AddPassenger',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'AddPassenger'])->name('AddPassenger');
 
     Route::post('AddDocumentos',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'AddDocumentos'])->name('AddDocumentos');
-   
+
     Route::post('AddDocumentosMarinosZN',[\App\Http\Controllers\Zarpes\PermisoZarpeController::class,'AddDocumentosMarinosZN'])->name('AddDocumentosMarinosZN');
 
     /*Inicio de Rutas de zarpe Internacional*/
@@ -160,8 +160,8 @@ Route::middleware(['auth' , 'verified'])->group(function () {
      Route::get('AddPassengerZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'AddPassengerZI'])->name('AddPassengerZI');
 
     Route::post('AddDocumentosZI',[\App\Http\Controllers\Zarpes\ZarpeInternacionalController::class,'AddDocumentosZI'])->name('AddDocumentosZI');
-    
-    
+
+
     /*Fin de Rutas de zarpe Internacional*/
 
     Route::get('notificaciones/index',[\App\Http\Controllers\Zarpes\NotificacioneController::class,'index'])->name('notificaciones.index');

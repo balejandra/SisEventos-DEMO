@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StatusZarpes extends Seeder
+class StatusSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,7 +14,7 @@ class StatusZarpes extends Seeder
      */
     public function run()
     {
-        DB::table('zarpes.status')->insert([
+        DB::table('status')->insert([
             [
                 'id'=>1,
                 'nombre'=>'Aprobado',
@@ -32,12 +32,12 @@ class StatusZarpes extends Seeder
             ],
             [
                 'id'=>4,
-                'nombre'=>'Cerrado',
+                'nombre'=>'Pagado',
                 'created_at'=>now()
             ],
             [
                 'id'=>5,
-                'nombre'=>'Navegando',
+                'nombre'=>'Pago Rechazado',
                 'created_at'=>now()
             ],
             [
@@ -48,31 +48,6 @@ class StatusZarpes extends Seeder
             [
                 'id'=>7,
                 'nombre'=>'Anulado Vencido',
-                'created_at'=>now()
-            ],
-            [
-                'id'=>8,
-                'nombre'=>'Anulado SAR',
-                'created_at'=>now()
-            ],
-            [
-                'id'=>9,
-                'nombre'=>'Visita asignada',
-                'created_at'=>now()
-            ],
-            [
-                'id'=>10,
-                'nombre'=>'Visita aprobada, recaudos faltantes',
-                'created_at'=>now()
-            ],
-            [
-                'id'=>11,
-                'nombre'=>'Pendiente Aprobacion',
-                'created_at'=>now()
-            ],
-            [
-                'id'=>12,
-                'nombre'=>'Renovacion',
                 'created_at'=>now()
             ],
         ]);

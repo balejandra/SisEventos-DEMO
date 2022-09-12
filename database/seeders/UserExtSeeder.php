@@ -18,9 +18,9 @@ class UserExtSeeder extends Seeder
     public function run()
     {
         $user = User::create([
-            'nombres' => 'Pedro',
-            'apellidos' => 'Perez',
-            'email' => 'pedro@pedro.com',
+            'nombres' => 'Usuario',
+            'apellidos' => 'Prueba',
+            'email' => 'user@prueba.com',
             'tipo_identificacion'=>'cedula',
             'numero_identificacion'=>'987654321',
             'email_verified_at' => now(),

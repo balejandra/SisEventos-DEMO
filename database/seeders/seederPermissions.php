@@ -45,26 +45,12 @@ class seederPermissions extends Seeder
             'consultar-menu',
             'eliminar-menu',
 
-            //Permisos para capitanias
-            'listar-capitania',
-            'crear-capitania',
-            'editar-capitania',
-            'consultar-capitania',
-            'eliminar-capitania',
-
-            //Permisos para dependencias federales
-            'listar-dependencia',
-            'crear-dependencia',
-            'editar-dependencia',
-            'consultar-dependencia',
-            'eliminar-dependencia',
-
-            //Permisos para Equipos
-            'listar-equipo',
-            'crear-equipo',
-            'editar-equipo',
-            'consultar-equipo',
-            'eliminar-equipo',
+            //Permisos para departamentos
+            'listar-departamento',
+            'crear-departamento',
+            'editar-departamento',
+            'consultar-departamento',
+            'eliminar-departamento',
 
             //Permisos para Status
             'listar-status',
@@ -73,61 +59,31 @@ class seederPermissions extends Seeder
             'consultar-status',
             'eliminar-status',
 
-            //Permisos para tabla de mandos
-            'listar-mando',
-            'crear-mando',
-            'editar-mando',
-            'consultar-mando',
-            'eliminar-mando',
-
-            //Permisos para permisos de zarpes
-            'consultar-zarpe',
-            'eliminar-zarpe',
-            'aprobar-zarpe',
-            'rechazar-zarpe',
+            //Permisos para permisos de eventos
+            'consultar-evento',
+            'aprobar-evento',
+            'rechazar-evento',
             'informar-arribo',
             'informar-navegacion',
             'anular-sar',
-            'anular-zarpeUsuario',
-            'listar-zarpes-todos', //admin
-            'listar-zarpes-generados',//usuariosweb
-            'listar-zarpes-capitania-origen',
-            'listar-zarpes-establecimiento-origen',//comodoros
-            'listar-zarpe-destino', //comodoro, capitan, comodoro_aprovador
+            'anular-eventoUsuario',
+            'listar-eventos-todos', //admin
+            'listar-eventos-generados',//usuariosweb
+            'aprobar-pago',
+            'rechazar-pago',//comodoros
+            'listar-evento-porpagar', //comodoro, capitan, comodoro_aprovador
 
-            //permisos para permisos de estadia
-            'crear-estadia',
-            'asignar-visita-estadia',
-            'visita-estadia-aprobada',
-            'recaudos-estadia',
-            'aprobar-estadia',
-            'rechazar-estadia',
-            'anular-estadia',
-            'listar-estadia-todos',
-            'listar-estadia-generados',
-            'listar-estadia-coordinador',
-            'listar-estadia-capitania-destino',
-            'renovar-estadia',
-
-              //permisos para usuarios de capitanias
-            'listar-usuarios-capitanias',
-            'crear-usuarios-capitanias',
-            'consultar-usuarios-capitanias',
-            'editar-usuarios-capitanias',
-            'eliminar-usuarios-capitanias',
+              //permisos para usuarios de departamentos
+            'listar-usuarios-departamentos',
+            'crear-usuarios-departamentos',
+            'consultar-usuarios-departamentos',
+            'editar-usuarios-departamentos',
+            'eliminar-usuarios-departamentos',
 
             //permisos para Auditoria
             'listar-auditoria',
             'consultar-auditoria',
 
-            //permisos para Establecimientos
-            'consultar-establecimientoNautico',
-            'editar-establecimientoNautico',
-            'eliminar-establecimientoNautico',
-            'listar-establecimientoNautico',
-            'crear-establecimientoNautico',
-
-            
             //permisos para Notificaciones
             'consultar-notificaciones',
             'listar-notificaciones',
