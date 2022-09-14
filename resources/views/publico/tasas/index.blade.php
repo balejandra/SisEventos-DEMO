@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Departamentos
+    Tasas
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -8,9 +8,8 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('capitanias.index') !!}">Departamento</a>
+                    <a href="{!! route('capitanias.index') !!}">Tasas</a>
                 </li>
-                <li class="breadcrumb-item">Crear</li>
             </ol>
         </nav>
     </div>
@@ -22,9 +21,13 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
-                             Tasas
-                             <a class="pull-right" href="{{ route('tasas.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
+                             <i class="fas fa-percentage"></i>
+                             <strong>Tasas</strong>
+                             @can('crear-tasas')
+                                 <div class="card-header-actions">
+                                     <a class="btn btn-primary btn-sm"  href="{{ route('tasas.create') }}">Nuevo</a>
+                                 </div>
+                             @endcan
                          </div>
                          <div class="card-body">
                              @include('publico.tasas.table')

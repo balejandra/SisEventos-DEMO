@@ -1,24 +1,26 @@
-<!-- Id Field -->
-<div class="form-group">
-    {!! Form::label('id', 'Id:') !!}
-    <p>{{ $tasa->id }}</p>
-</div>
-
-<!-- Tipo Actividad Field -->
-<div class="form-group">
-    {!! Form::label('tipo_actividad', 'Tipo Actividad:') !!}
-    <p>{{ $tasa->tipo_actividad }}</p>
-</div>
-
-<!-- Valor Field -->
-<div class="form-group">
-    {!! Form::label('valor', 'Valor:') !!}
-    <p>{{ $tasa->valor }}</p>
-</div>
-
-<!-- Parametro Field -->
-<div class="form-group">
-    {!! Form::label('parametro', 'Parametro:') !!}
-    <p>{{ $tasa->parametro }}</p>
+<table class="table">
+    <tbody>
+    <tr>
+        <th class="bg-light">ID</th>
+        <td>{{ $tasa->id }}</td>
+    </tr>
+    <tr>
+        <th class="bg-light">Tipo Actividad</th>
+        <td>{{ $tasa->tipo_actividad }}</td>
+    </tr>
+<tr>
+    <th class="bg-light">Valor</th>
+    <td>{{ $tasa->valor }}</td>
+</tr>
+    <tr>
+        <th class="bg-light">Parametro</th>
+        <td>{{ $tasa->parametro }}</td>
+    </tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class="form-group text-center col-sm-12">
+        <a href="{{ route('tasas.index') }}" class="btn btn-light btncancelarZarpes">Cancelar</a>
+    </div>
 </div>
 

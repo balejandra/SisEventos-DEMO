@@ -7,6 +7,8 @@ use App\Http\Requests\Publico\CreateTasaRequest;
 use App\Http\Requests\Publico\UpdateTasaRequest;
 use App\Repositories\Publico\TasaRepository;
 use Illuminate\Http\Request;
+use Flash;
+use Response;
 
 class TasaController extends Controller
 {
@@ -16,6 +18,11 @@ class TasaController extends Controller
     public function __construct(TasaRepository $tasaRepo)
     {
         $this->tasaRepository = $tasaRepo;
+        $this->middleware('permission:listar-tasas', ['only'=>['index'] ]);
+        $this->middleware('permission:crear-tasas', ['only'=>['create','store']]);
+        $this->middleware('permission:editar-tasas', ['only'=>['edit','update']]);
+        $this->middleware('permission:consultar-tasas', ['only'=>['show'] ]);
+        $this->middleware('permission:eliminar-tasas', ['only'=>['destroy'] ]);
     }
 
     /**

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Departamentos
+    Tasas
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('capitanias.index') !!}">Departamento</a>
+                    <a href="{!! route('capitanias.index') !!}">Tasas</a>
                 </li>
                 <li class="breadcrumb-item">Crear</li>
             </ol>
@@ -22,15 +22,23 @@
                  <div class="col-lg-12">
                       <div class="card">
                           <div class="card-header">
-                              <i class="fa fa-edit fa-lg"></i>
-                              <strong>Edit Tasa</strong>
+                              <i class="fas fa-percentage"></i>
+                              <strong>Editar Tasa</strong>
+                              <div class="card-header-actions">
+
+                              </div>
                           </div>
                           <div class="card-body">
+                              <div class="row justify-content-center">
+
+                                  <div class="col-md-8 border rounded p-3">
                               {!! Form::model($tasa, ['route' => ['tasas.update', $tasa->id], 'method' => 'patch']) !!}
 
-                              @include('tasas.fields')
+                              @include('publico.tasas.fields')
 
                               {!! Form::close() !!}
+                                  </div>
+                              </div>
                             </div>
                         </div>
                     </div>

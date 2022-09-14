@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Departamentos
+    Tasas
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -8,9 +8,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('capitanias.index') !!}">Departamento</a>
+                    <a href="{!! route('capitanias.index') !!}">Tasas</a>
                 </li>
-                <li class="breadcrumb-item">Crear</li>
+                <li class="breadcrumb-item">Consulta</li>
             </ol>
         </nav>
     </div>
@@ -22,11 +22,22 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <strong>Details</strong>
-                                  <a href="{{ route('tasas.index') }}" class="btn btn-light">Back</a>
+                                 <i class="fas fa-percentage"></i>
+                                 <strong>Consultar Tasas</strong>
+                                 <div class="card-header-actions">
+                                 </div>
                              </div>
                              <div class="card-body">
-                                 @include('tasas.show_fields')
+                                 <div class="my-2">
+                                     <div class="container">
+                                         <div class="row">
+                                             <div class="col-md-3"></div>
+                                             <div class="col-md-6 p-0 border rounded">
+                                 @include('publico.tasas.show_fields')
+                                             </div>
+                                         </div>
+                                     </div>
+                                 </div>
                              </div>
                          </div>
                      </div>

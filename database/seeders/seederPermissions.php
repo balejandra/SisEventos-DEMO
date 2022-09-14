@@ -88,6 +88,12 @@ class seederPermissions extends Seeder
             'consultar-notificaciones',
             'listar-notificaciones',
 
+            //Permisos para tasas
+            'listar-tasas',
+            'crear-tasas',
+            'editar-tasas',
+            'consultar-tasas',
+            'eliminar-tasas',
 
         ];
 
