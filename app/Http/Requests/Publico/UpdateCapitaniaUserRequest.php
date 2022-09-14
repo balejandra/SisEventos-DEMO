@@ -3,7 +3,7 @@
 namespace App\Http\Requests\Publico;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 
 class UpdateCapitaniaUserRequest extends FormRequest
 {
@@ -25,7 +25,7 @@ class UpdateCapitaniaUserRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = CapitaniaUser::$rules;
+        $rules = DepartamentoUser::$rules;
 
         return $rules;
     }

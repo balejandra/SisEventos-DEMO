@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\Zarpes\MailController;
 use App\Http\Controllers\Zarpes\NotificacioneController;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 use App\Models\User;
 use App\Models\SATIM\PermisoZarpe;
 use App\Models\SATIM\Status;
@@ -55,7 +55,7 @@ class VerificationZarpeRescate extends Command
             $zarpeRescate=PermisoZarpe::where('id',$record->id)
                 ->update(['status_id'=>14]);
 
-            $userc=CapitaniaUser::where('capitania_id',$record->destino_capitania_id)
+            $userc=DepartamentoUser::where('capitania_id',$record->destino_capitania_id)
                 ->where('habilitado',true)
                 ->get();
 
@@ -93,7 +93,7 @@ class VerificationZarpeRescate extends Command
         foreach($zarpeIVencido as $recordI){
             $zarpeRescateI=PermisoZarpe::where('id',$recordI->id)
                 ->update(['status_id'=>14]);
-            $usercI=CapitaniaUser::where('capitania_id',$recordI->destino_capitania_id)
+            $usercI=DepartamentoUser::where('capitania_id',$recordI->destino_capitania_id)
                 ->where('habilitado',true)
                 ->get();
 

@@ -6,9 +6,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <span>
-                <img src="{{asset('images/inea.png')}}" alt="inea" class="nav-avatar">
+                <img src="{{asset('images/logo.png')}}" alt="logo" class="nav-avatar">
             </span>
-            <div class="text-center">  <h4>Sistema de Gestión de Zarpes para Buques Deportivos y de Recreo</h4></div>
+            <div class="text-center">  <h4>Sistema de Solicitud de Permiso de Eventos</h4></div>
 
             <div class="card-group">
                 <div class="card p-4">

@@ -26,7 +26,7 @@ class Departamento extends Model implements Auditable
     use HasFactory;
 
     protected $connection = 'pgsql_public_schema';
-    public $table = 'capitanias';
+    public $table = 'departamentos';
 
 
     protected $dates = ['deleted_at'];

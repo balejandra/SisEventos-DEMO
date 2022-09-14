@@ -116,7 +116,7 @@ function changetipodocumento() {
             "                                               name=\"fecha_nacimiento\" value=\"{{ old('fecha_nacimiento') }}\" id=\"fecha_nacimiento\"\n" +
             "                                               placeholder=\"fecha_nacimiento\" required>\n" +
             "                                    </div>"
-        $('#btonregister').prop('disabled', false);
+      //  $('#btonregister').prop('disabled', false);
         document.getElementById("apellidos").readOnly = false;
         document.getElementById("nombres").readOnly = false;
         document.getElementById("nombres").value = '';
@@ -134,7 +134,7 @@ function changetipodocumento() {
             "                                               name=\"fecha_nacimiento\" value=\"{{ old('fecha_nacimiento') }}\" id=\"fecha_nacimiento\"\n" +
             "                                               placeholder=\"fecha_nacimiento\" required onblur=\"getEmployees($('#numero_identificacion').val(),$('#fecha_nacimiento').val())\" >\n" +
             "                                    </div>"
-        $('#btonregister').prop('disabled', true);
+      //  $('#btonregister').prop('disabled', true);
     } else if (sel=='Rif'){
         console.log('RIF')
         document.getElementById('numero_identificacion').maxLength = 10;

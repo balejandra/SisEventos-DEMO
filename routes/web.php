@@ -41,7 +41,6 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('userDelete.index',[\App\Http\Controllers\Publico\UserController::class,'indexUserDeleted'])->name('userDelete.index');
     Route::get('userDeleted/{user}',[\App\Http\Controllers\Publico\UserController::class,'restoreUserDeleted'])->name('userDeleted.restore');
 
-    Route::get('EstablecimientoUser',[\App\Http\Controllers\Publico\CapitaniaUserController::class,'EstablecimientoUser'])->name('AsignarEstablecimiento');
 
     Route::get('/permissions', [App\Http\Controllers\Publico\PermissionController::class, 'index'])->name('permissions')->middleware('auth');
     Route::get('/permissions/create', [App\Http\Controllers\Publico\PermissionController::class, 'create'])->name('permissions.create');
@@ -65,19 +64,16 @@ Route::middleware(['auth' , 'verified'])->group(function () {
     Route::get('roleDeleted/{role}',[\App\Http\Controllers\Publico\RoleController::class,'restoreRoleDeleted'])->name('roleDeleted.restore');
 
 
-    Route::resource('capitanias', \App\Http\Controllers\Publico\CapitaniaController::class);
+    Route::resource('capitanias', \App\Http\Controllers\Publico\DepartamentoController::class);
 
-    Route::resource('capitaniaUsers', \App\Http\Controllers\Publico\CapitaniaUserController::class);
-    Route::get('/search', [\App\Http\Controllers\Publico\CapitaniaUserController::class,'search'])->name('capitaniauser.search');
+    Route::resource('capitaniaUsers', \App\Http\Controllers\Publico\DepartamentoUserController::class);
+    Route::get('/search', [\App\Http\Controllers\Publico\DepartamentoUserController::class,'search'])->name('capitaniauser.search');
 
 
     Route::resource('auditables', \App\Http\Controllers\Publico\AuditsController::class);
 
-    Route::delete('/coordenadasCapitania/{coordenadasCapitania}', [App\Http\Controllers\Publico\CoordenadasCapitaniaController::class, 'destroy'])->name('coordenadasCapitania.destroy');
+    Route::resource('tasas', \App\Http\Controllers\Publico\TasaController::class);
 
-    Route::resource('dependenciasfederales', \App\Http\Controllers\Publico\DependenciaFederalController::class);
-
-    Route::resource('establecimientosNauticos', \App\Http\Controllers\Publico\EstablecimientosNauticosController::class);
 });
 
 

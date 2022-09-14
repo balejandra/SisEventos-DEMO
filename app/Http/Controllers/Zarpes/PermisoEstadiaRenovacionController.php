@@ -6,12 +6,12 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Zarpes\CreatePermisoEstadiaRequest;
 use App\Models\Publico\Departamento;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 use App\Models\User;
-use App\Models\SATIM\DocumentoPermisoEstadia;
+use App\Models\SATIM\DocumentoAutorizacion;
 use App\Models\SATIM\EstablecimientoNautico;
-use App\Models\SATIM\EstadiaRevision;
-use App\Models\SATIM\PermisoEstadia;
+use App\Models\SATIM\RevisionAutorizacion;
+use App\Models\SATIM\AutorizacionEvento;
 use App\Models\SATIM\Status;
 use App\Models\SATIM\VisitaPermisoEstadia;
 use App\Repositories\Zarpes\PermisoEstadiaRepository;
@@ -50,9 +50,9 @@ class PermisoEstadiaRenovacionController extends AppBaseController
      */
     public function create($id)
     {
-        $permiso= PermisoEstadia::find($id);
+        $permiso= AutorizacionEvento::find($id);
         $nro=substr($permiso->nro_solicitud,0,13);
-        $count=PermisoEstadia::where('nro_registro',$permiso->nro_registro)
+        $count=AutorizacionEvento::where('nro_registro',$permiso->nro_registro)
             ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)
             ->where('status_id',1)
             ->orWhere('status_id',12)
@@ -66,7 +66,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         }
 
         $capitanias = Departamento::all();
-        $permiso= PermisoEstadia::find($id);
+        $permiso= AutorizacionEvento::find($id);
         return view('zarpes.permiso_estadias.renovacion.create')
             ->with('capitanias', $capitanias)
             ->with('permiso',$permiso)
@@ -135,16 +135,16 @@ class PermisoEstadiaRenovacionController extends AppBaseController
 
             ]
         );
-        $permiso=PermisoEstadia::find($id);
+        $permiso=AutorizacionEvento::find($id);
         $nro=substr($permiso->nro_solicitud,0,13);
         //dd($nro_solicitud);
-        $count=PermisoEstadia::where('nro_registro',$permiso->nro_registro)
+        $count=AutorizacionEvento::where('nro_registro',$permiso->nro_registro)
             ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)
             ->count();
       // dd($count);
         $cantidadpermisos=$count+1;
 
-        $aprobados=PermisoEstadia::where('nro_registro',$permiso->nro_registro)
+        $aprobados=AutorizacionEvento::where('nro_registro',$permiso->nro_registro)
             ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)
             ->where('status_id',1)
             ->orWhere('status_id',12)
@@ -153,7 +153,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         $cantaprobados=$aprobados+1;
         //dd($permiso->id);
 //dd($nro.".".$cantidadpermisos);
-        $estadia = new PermisoEstadia();
+        $estadia = new AutorizacionEvento();
         $estadia->nro_solicitud = $nro.".$cantidadpermisos";
         $estadia->cantidad_solicitud=$cantaprobados;
         $estadia->user_id = auth()->user()->id;
@@ -183,7 +183,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
 
 
         if ($request->hasFile('zarpe_procedencia')) {
-            $documento1 = new DocumentoPermisoEstadia();
+            $documento1 = new DocumentoAutorizacion();
             $procedencia = $request->file('zarpe_procedencia');
             $filenamepro = date('dmYGi') . $procedencia->getClientOriginalName();
             $filenamepronew = str_replace(' ','',$filenamepro);
@@ -194,7 +194,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $documento1->save();
         }
         if ($request->hasFile('registro_embarcacion')) {
-            $documento2 = new DocumentoPermisoEstadia();
+            $documento2 = new DocumentoAutorizacion();
             $registro = $request->file('registro_embarcacion');
             $filenamereg = date('dmYGi') . $registro->getClientOriginalName();
             $filenameregnew = str_replace(' ','',$filenamereg);
@@ -205,7 +205,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $documento2->save();
         }
         if ($request->hasFile('despacho_aduana_procedencia')) {
-            $documento3 = new DocumentoPermisoEstadia();
+            $documento3 = new DocumentoAutorizacion();
             $migracion = $request->file('despacho_aduana_procedencia');
             $filenamemig = date('dmYGi') . $migracion->getClientOriginalName();
             $filenamemignew = str_replace(' ','',$filenamemig);
@@ -216,7 +216,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
             $documento3->save();
         }
         if ($request->hasFile('pasaportes_tripulantes')) {
-            $documento4 = new DocumentoPermisoEstadia();
+            $documento4 = new DocumentoAutorizacion();
             $pasaportes = $request->file('pasaportes_tripulantes');
             $filenamepas = date('dmYGi') . $pasaportes->getClientOriginalName();
             $filenamepasnew = str_replace(' ','',$filenamepas);
@@ -228,7 +228,7 @@ class PermisoEstadiaRenovacionController extends AppBaseController
         }
 
         if ($request->hasFile('nominacion_agencia')) {
-            $documento5 = new DocumentoPermisoEstadia();
+            $documento5 = new DocumentoAutorizacion();
             $nominacion = $request->file('nominacion_agencia');
             $filenamenom = date('dmYGi') . $nominacion->getClientOriginalName();
             $filenamenomnew = str_replace(' ','',$filenamenom);
@@ -287,18 +287,18 @@ class PermisoEstadiaRenovacionController extends AppBaseController
 
     public function SendMail($idsolicitud, $tipo, $mailUser)
     {
-        $solicitud = PermisoEstadia::find($idsolicitud);
+        $solicitud = AutorizacionEvento::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
         $rolecapitan=Role::find(4);
         $rolecoordinador=Role::find(7);
-        $capitanDestino = CapitaniaUser::select('capitania_id', 'email')
+        $capitanDestino = DepartamentoUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
             ->where('cargo', $rolecapitan->id)
             ->get();
 
 
-        $coordinador = CapitaniaUser::select('capitania_id', 'email')
+        $coordinador = DepartamentoUser::select('capitania_id', 'email')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
             ->where('cargo', $rolecoordinador->id)

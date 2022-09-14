@@ -9,15 +9,9 @@
         <td> {{ $capitaniaUser->user->email }}</td>
     </tr>
     <tr>
-        <th class="bg-light">Capitanía</th>
-        <td> {{ $capitaniaUser->capitania->nombre }}</td>
+        <th class="bg-light">Departamento</th>
+        <td> {{ $capitaniaUser->departamento->nombre }}</td>
     </tr>
-    @if (isset($capitaniaUser->establecimientos->nombre))
-        <tr>
-            <th  width="35%" class="bg-light">Establecimiento Náutico</th>
-            <td> {{ $capitaniaUser->establecimientos->nombre }}</td>
-        </tr>
-    @endif
     <tr>
         <th class="bg-light">Habilitado</th>
         <td>@if($capitaniaUser->habilitado ==1 ) SI @else NO @endif</td>

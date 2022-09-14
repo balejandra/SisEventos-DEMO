@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Zarpes;
 
 
 use App\Http\Controllers\Controller;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 use App\Models\Renave\Renave_data;
 use App\Models\User;
 use App\Models\SATIM\CargoTablaMando;
@@ -25,7 +25,7 @@ use App\Models\Gmar\LicenciasTitulosGmar;
 use App\Models\Publico\CoordenadasCapitania;
 use App\Models\Publico\Departamento;
 use App\Models\Sgm\TiposCertificado;
-use App\Models\SATIM\PermisoEstadia;
+use App\Models\SATIM\AutorizacionEvento;
 use App\Models\SATIM\CoordenadasDependenciasFederales;
 use App\Models\Publico\DependenciaFederal;
 use App\Models\SATIM\DescripcionNavegacion;
@@ -60,7 +60,7 @@ class ZarpeInternacionalController extends Controller
 
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-capitania-origen')) {
             $user = auth()->id();
-            $capitania = CapitaniaUser::select('capitania_id')->where('user_id', $user)->where('habilitado',true)->get();
+            $capitania = DepartamentoUser::select('capitania_id')->where('user_id', $user)->where('habilitado',true)->get();
             $datazarpedestino = PermisoZarpe::whereIn('destino_capitania_id', $capitania)->where('descripcion_navegacion_id', 4)->get();
             $establecimiento = EstablecimientoNautico::select('id')->whereIn('capitania_id', $capitania)->get();
             $datazarpeorigen = PermisoZarpe::whereIn('establecimiento_nautico_id', $establecimiento)->where('descripcion_navegacion_id', 4)->get();
@@ -70,7 +70,7 @@ class ZarpeInternacionalController extends Controller
 
         } elseif (auth()->user()->hasPermissionTo('listar-zarpes-establecimiento-origen')) {
             $user = auth()->id();
-            $establecimiento = CapitaniaUser::select('establecimiento_nautico_id')->where('user_id', $user)
+            $establecimiento = DepartamentoUser::select('establecimiento_nautico_id')->where('user_id', $user)
                 ->where('establecimiento_nautico_id','<>',null)
                 ->where('habilitado',true)
                 ->get();
@@ -360,7 +360,7 @@ class ZarpeInternacionalController extends Controller
     {
         $permiso = $_REQUEST['permiso'];
 
-        $permisoEstadia = PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
+        $permisoEstadia = AutorizacionEvento::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
 
         if (is_null($permisoEstadia->first())) {
 
@@ -395,7 +395,7 @@ class ZarpeInternacionalController extends Controller
         $idpermiso = $_REQUEST['permiso_de_estadia'];
         $matricula = $_REQUEST['numero_de_registro'];
 
-        $permisoEstadia = PermisoEstadia::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
+        $permisoEstadia = AutorizacionEvento::where('user_id', auth()->id())->where('nro_solicitud', $permiso)->where('status_id', 1)->get();
 
         $solicitud = json_decode($request->session()->get('solicitud'), true);
         $solicitud['matricula'] = $matricula;
@@ -1205,7 +1205,7 @@ class ZarpeInternacionalController extends Controller
 
         if ($status === 'aprobado') {
             if ($transaccion->bandera=='extranjera') {
-                $buqueconsex=PermisoEstadia::where('id',$transaccion->permiso_estadia_id)->first();
+                $buqueconsex=AutorizacionEvento::where('id',$transaccion->permiso_estadia_id)->first();
                 $buque=$buqueconsex->nombre_buque;
             }else {
                 $buqueconsnac= Renave_data::where('matricula_actual',$transaccion->matricula)->first();
@@ -1250,7 +1250,7 @@ class ZarpeInternacionalController extends Controller
         } elseif ($status === 'rechazado') {
             $motivo = $_GET['motivo'];
             if ($transaccion->bandera=='extranjera') {
-                $buqueconsex=PermisoEstadia::where('id',$transaccion->permiso_estadia_id)->first();
+                $buqueconsex=AutorizacionEvento::where('id',$transaccion->permiso_estadia_id)->first();
                 $buque=$buqueconsex->nombre_buque;
             }else {
                 $buqueconsnac= Renave_data::where('matricula_actual',$transaccion->matricula)->first();
@@ -1355,7 +1355,7 @@ class ZarpeInternacionalController extends Controller
     {
         $permisoZarpe = PermisoZarpe::find($id);
         if ($permisoZarpe->bandera=='extranjera') {
-            $buque=PermisoEstadia::where('id',$permisoZarpe->permiso_estadia_id)->first();
+            $buque=AutorizacionEvento::where('id',$permisoZarpe->permiso_estadia_id)->first();
         }else {
             $buque=Renave_data::where('matricula_actual',$permisoZarpe->matricula)->first();
         }
@@ -1403,11 +1403,11 @@ class ZarpeInternacionalController extends Controller
         $paises= Paise::where('id', $permisoZarpe->paises_id)->get();
 
         $establecimiento = EstablecimientoNautico::select('capitania_id')->where('id', $permisoZarpe->establecimiento_nautico_id)->get();
-        $establecimiento_user = CapitaniaUser::select('user_id')
+        $establecimiento_user = DepartamentoUser::select('user_id')
             ->where('establecimiento_nautico_id', $permisoZarpe->establecimiento_nautico_id)
             ->get();
         $establecimiento_destino = EstablecimientoNautico::find($permisoZarpe->establecimiento_nautico_destino_id);
-        $capitania_user = CapitaniaUser::select('user_id')->whereIn('capitania_id', $establecimiento)->get();
+        $capitania_user = DepartamentoUser::select('user_id')->whereIn('capitania_id', $establecimiento)->get();
         $descipcionNavegacion=DescripcionNavegacion::find($permisoZarpe->descripcion_navegacion_id);
         $capitaniaOrigen=Departamento::find($establecimiento);
         if (empty($permisoZarpe)) {
@@ -1436,7 +1436,7 @@ class ZarpeInternacionalController extends Controller
         $solicitud = PermisoZarpe::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
 
-        $capitanDestino = CapitaniaUser::select('capitania_id', 'email', 'user_id')
+        $capitanDestino = DepartamentoUser::select('capitania_id', 'email', 'user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->destino_capitania_id)
             ->where('cargo', '=', 4)
@@ -1446,7 +1446,7 @@ class ZarpeInternacionalController extends Controller
         $estNautico = EstablecimientoNautico::find($solicitud->establecimiento_nautico_id);
 
 
-        $capitanOrigen = CapitaniaUser::select('capitania_id', 'email','user_id')
+        $capitanOrigen = DepartamentoUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $estNautico->capitania_id)
             ->where('cargo', '=', 4)

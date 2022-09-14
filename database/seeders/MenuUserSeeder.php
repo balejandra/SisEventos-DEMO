@@ -21,7 +21,7 @@ class MenuUserSeeder extends Seeder
             'url' => 'home',
             'order' => '0',
             'parent' => '0',
-            'icono'=>'icon-settings',
+            'icono'=>'fas fa-cog',
         ]);
 
         $menuRols = [
@@ -33,9 +33,9 @@ class MenuUserSeeder extends Seeder
         $menu2 = Menu::create([
             'name' => 'Menus',
             'url' => 'menus',
-            'order' => '0',
+            'order' => '2',
             'parent' => $menuConfig['id'],
-            'icono'=>'icon-menu',
+            'icono'=>'fas fa-bars',
         ]);
 
         $menuRols3 = [
@@ -47,9 +47,9 @@ class MenuUserSeeder extends Seeder
         $permiso = Menu::create([
             'name' => 'Permisos',
             'url' => 'permissions',
-            'order' => '1',
+            'order' => '0',
             'parent' => $menuConfig['id'],
-            'icono'=>'icon-lock',
+            'icono'=>'fa fa-address-card',
         ]);
 
         $menuRols4 = [
@@ -60,9 +60,9 @@ class MenuUserSeeder extends Seeder
         $roles = Menu::create([
             'name' => 'Roles',
             'url' => 'roles',
-            'order' => '2',
+            'order' => '1',
             'parent' => $menuConfig['id'],
-            'icono'=>'icon-list',
+            'icono'=>'fa fa-id-badge',
         ]);
 
         $menuRols5 = [
@@ -90,7 +90,7 @@ class MenuUserSeeder extends Seeder
             'url' => 'home',
             'order' => '1',
             'parent' => '0',
-            'icono'=>'icon-globe',
+            'icono'=>'fas fa-globe',
         ]);
 
         $menuRols1 = [
@@ -103,7 +103,7 @@ class MenuUserSeeder extends Seeder
             'url' => 'users',
             'order' => '0',
             'parent' => $menuPublico['id'],
-            'icono'=>'icon-user',
+            'icono'=>'fa fa-user',
         ]);
 
         $menupubli = [
@@ -112,11 +112,11 @@ class MenuUserSeeder extends Seeder
         DB::table('menus_roles')->insert($menupubli);
 
         $capitania = Menu::create([
-            'name' => 'Capitanias',
+            'name' => 'Departamentos',
             'url' => 'capitanias',
             'order' => '1',
             'parent' => $menuPublico['id'],
-            'icono'=>'icon-organization',
+            'icono'=>'fa fa-building',
         ]);
 
         $menupubli1 = [

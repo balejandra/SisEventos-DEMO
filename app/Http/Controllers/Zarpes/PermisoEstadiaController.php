@@ -6,13 +6,13 @@ use App\Http\Controllers\AppBaseController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Zarpes\CreatePermisoEstadiaRequest;
 use App\Models\Publico\Departamento;
-use App\Models\Publico\CapitaniaUser;
+use App\Models\Publico\DepartamentoUser;
 use App\Models\Publico\Paise;
 use App\Models\User;
-use App\Models\SATIM\DocumentoPermisoEstadia;
+use App\Models\SATIM\DocumentoAutorizacion;
 use App\Models\SATIM\EstablecimientoNautico;
-use App\Models\SATIM\EstadiaRevision;
-use App\Models\SATIM\PermisoEstadia;
+use App\Models\SATIM\RevisionAutorizacion;
+use App\Models\SATIM\AutorizacionEvento;
 use App\Models\SATIM\Status;
 use App\Models\SATIM\VisitaPermisoEstadia;
 use App\Repositories\Zarpes\PermisoEstadiaRepository;
@@ -51,25 +51,25 @@ class PermisoEstadiaController extends AppBaseController
                 ->with('permisoEstadias', $permisoEstadias);
 
         } else if (auth()->user()->hasPermissionTo('listar-estadia-generados')) {
-            $permisoEstadias = PermisoEstadia::where('user_id', $user)->get();
+            $permisoEstadias = AutorizacionEvento::where('user_id', $user)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
 
         } else if (auth()->user()->hasPermissionTo('listar-estadia-coordinador')) {
-            $coordinador = CapitaniaUser::select('capitania_id')
+            $coordinador = DepartamentoUser::select('capitania_id')
                 ->where('user_id', $user)
                 ->where('habilitado',true)
                 ->get();
-            $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $coordinador)->get();
+            $permisoEstadias = AutorizacionEvento::whereIn('capitania_id', $coordinador)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
 
         } else if (auth()->user()->hasPermissionTo('listar-estadia-capitania-destino')) {
-            $capitania = CapitaniaUser::select('capitania_id')
+            $capitania = DepartamentoUser::select('capitania_id')
                 ->where('user_id', $user)
                 ->where('habilitado',true)
                 ->get();
-            $permisoEstadias = PermisoEstadia::whereIn('capitania_id', $capitania)->get();
+            $permisoEstadias = AutorizacionEvento::whereIn('capitania_id', $capitania)->get();
             return view('zarpes.permiso_estadias.index')
                 ->with('permisoEstadias', $permisoEstadias);
 
@@ -157,7 +157,7 @@ class PermisoEstadiaController extends AppBaseController
 ]
             );
 
-        $matriculaexis=PermisoEstadia::where('nro_registro',$request->nro_registro)
+        $matriculaexis=AutorizacionEvento::where('nro_registro',$request->nro_registro)
             ->where('status_id',1)
             ->first();
         if ($matriculaexis) {
@@ -167,7 +167,7 @@ class PermisoEstadiaController extends AppBaseController
         }else {
             $notificacion = new NotificacioneController();
 
-            $estadia = new PermisoEstadia();
+            $estadia = new AutorizacionEvento();
             $estadia->nro_solicitud = $this->codigo($request->capitania_id);
             $estadia->cantidad_solicitud = '1';
             $estadia->user_id = auth()->user()->id;
@@ -197,7 +197,7 @@ class PermisoEstadiaController extends AppBaseController
 
 
             if ($request->hasFile('zarpe_procedencia')) {
-                $documento1 = new DocumentoPermisoEstadia();
+                $documento1 = new DocumentoAutorizacion();
                 $procedencia = $request->file('zarpe_procedencia');
                 $filenamepro = date('dmYGi') . $procedencia->getClientOriginalName();
                 $filenamepronew = str_replace(' ','',$filenamepro);
@@ -208,7 +208,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento1->save();
             }
             if ($request->hasFile('registro_embarcacion')) {
-                $documento2 = new DocumentoPermisoEstadia();
+                $documento2 = new DocumentoAutorizacion();
                 $registro = $request->file('registro_embarcacion');
                 $filenamereg = date('dmYGi') . $registro->getClientOriginalName();
                 $filenameregnew = str_replace(' ','',$filenamereg);
@@ -219,7 +219,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento2->save();
             }
             if ($request->hasFile('despacho_aduana_procedencia')) {
-                $documento3 = new DocumentoPermisoEstadia();
+                $documento3 = new DocumentoAutorizacion();
                 $migracion = $request->file('despacho_aduana_procedencia');
                 $filenamemig = date('dmYGi') . $migracion->getClientOriginalName();
                 $filenamemignew = str_replace(' ','',$filenamemig);
@@ -230,7 +230,7 @@ class PermisoEstadiaController extends AppBaseController
                 $documento3->save();
             }
             if ($request->hasFile('pasaportes_tripulantes')) {
-                $documento4 = new DocumentoPermisoEstadia();
+                $documento4 = new DocumentoAutorizacion();
                 $pasaportes = $request->file('pasaportes_tripulantes');
                 $filenamepas = date('dmYGi') . $pasaportes->getClientOriginalName();
                 $filenamepasnew = str_replace(' ','',$filenamepas);
@@ -242,7 +242,7 @@ class PermisoEstadiaController extends AppBaseController
             }
 
             if ($request->hasFile('nominacion_agencia')) {
-                $documento5 = new DocumentoPermisoEstadia();
+                $documento5 = new DocumentoAutorizacion();
                 $nominacion = $request->file('nominacion_agencia');
                 $filenamenom = date('dmYGi') . $nominacion->getClientOriginalName();
                 $filenamenomnew = str_replace(' ','',$filenamenom);
@@ -265,7 +265,7 @@ class PermisoEstadiaController extends AppBaseController
     {
         $capitania = Departamento::find($capitania_id);
         $idcap=$capitania->id;
-        $cantidadActual = PermisoEstadia::select(DB::raw('count(nro_solicitud) as cantidad'))
+        $cantidadActual = AutorizacionEvento::select(DB::raw('count(nro_solicitud) as cantidad'))
             ->where('cantidad_solicitud',1)
             ->where(DB::raw("(SUBSTR(nro_solicitud,6,4) = '" . date('Y') . "')"), '=', true)
             ->Join('public.capitanias', function ($join) use ($idcap) {
@@ -292,8 +292,8 @@ class PermisoEstadiaController extends AppBaseController
     public function show($id)
     {
         $permisoEstadia = $this->permisoEstadiaRepository->find($id);
-        $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
-        $revisiones=EstadiaRevision::where('permiso_estadia_id',$id)->get();
+        $documentos = DocumentoAutorizacion::where('permiso_estadia_id', $id)->get();
+        $revisiones=RevisionAutorizacion::where('permiso_estadia_id',$id)->get();
         $visita=VisitaPermisoEstadia::where('permiso_estadia_id',$id)->get();
         if (empty($permisoEstadia)) {
             Flash::error('Permiso Estadía no encontrado');
@@ -318,7 +318,7 @@ class PermisoEstadiaController extends AppBaseController
     public function edit($id)
     {
         $permisoEstadia = $this->permisoEstadiaRepository->find($id);
-        $documentos = DocumentoPermisoEstadia::where('permiso_estadia_id', $id)->get();
+        $documentos = DocumentoAutorizacion::where('permiso_estadia_id', $id)->get();
         $capitanias = Departamento::all();
         if (empty($permisoEstadia)) {
             Flash::error('Permiso Estadía no encontrado');
@@ -351,7 +351,7 @@ class PermisoEstadiaController extends AppBaseController
         }
 
         if ($request->hasFile('permiso_seniat')) {
-            $documento1 = new DocumentoPermisoEstadia();
+            $documento1 = new DocumentoAutorizacion();
             $seniat = $request->file('permiso_seniat');
             $filenamesen = date('dmYGi') . $seniat->getClientOriginalName();
             $filenamesennew = str_replace(' ','',$filenamesen);
@@ -362,7 +362,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento1->save();
         }
         if ($request->hasFile('comprobante_alicuota')) {
-            $documento2 = new DocumentoPermisoEstadia();
+            $documento2 = new DocumentoAutorizacion();
             $alicuota = $request->file('comprobante_alicuota');
             $filenamealic = date('dmYGi') . $alicuota->getClientOriginalName();
             $filenamealicnew = str_replace(' ','',$filenamealic);
@@ -373,7 +373,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento2->save();
         }
         if ($request->hasFile('inspeccion_visita')) {
-            $documento3 = new DocumentoPermisoEstadia();
+            $documento3 = new DocumentoAutorizacion();
             $inspeccion = $request->file('inspeccion_visita');
             $filenameinsp = date('dmYGi') . $inspeccion->getClientOriginalName();
             $filenameinspnew = str_replace(' ','',$filenameinsp);
@@ -384,7 +384,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento3->save();
         }
         if ($request->hasFile('comprobante_saime')) {
-            $documento4 = new DocumentoPermisoEstadia();
+            $documento4 = new DocumentoAutorizacion();
             $saime = $request->file('comprobante_saime');
             $filenamesai = date('dmYGi') . $saime->getClientOriginalName();
             $filenamesainew = str_replace(' ','',$filenamesai);
@@ -395,7 +395,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4->save();
         }
         if ($request->hasFile('comprobante_insai')) {
-            $documento4 = new DocumentoPermisoEstadia();
+            $documento4 = new DocumentoAutorizacion();
             $insai = $request->file('comprobante_insai');
             $filenameins = date('dmYGi') . $insai->getClientOriginalName();
             $filenameinsnew = str_replace(' ','',$filenameins);
@@ -406,7 +406,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4->save();
         }
         if ($request->hasFile('pago_permisoEstadia')) {
-            $documento4 = new DocumentoPermisoEstadia();
+            $documento4 = new DocumentoAutorizacion();
             $pestadia = $request->file('pago_permisoEstadia');
             $filenameest = date('dmYGi') . $pestadia->getClientOriginalName();
             $filenameestnew = str_replace(' ','',$filenameest);
@@ -417,7 +417,7 @@ class PermisoEstadiaController extends AppBaseController
             $documento4->save();
         }
         if ($request->hasFile('comprobante_ochina')) {
-            $documento4 = new DocumentoPermisoEstadia();
+            $documento4 = new DocumentoAutorizacion();
             $ochina = $request->file('comprobante_ochina');
             $filenameoch = date('dmYGi') . $ochina->getClientOriginalName();
             $filenameochnew = str_replace(' ','',$filenameoch);
@@ -427,12 +427,12 @@ class PermisoEstadiaController extends AppBaseController
             $documento4->recaudo = 'Comprobante de pago a OCHINA';
             $documento4->save();
         }
-        $estadia= PermisoEstadia::find($id);
+        $estadia= AutorizacionEvento::find($id);
         $idstatus = Status::find(11);
         $estadia->status_id = $idstatus->id;
         $estadia->update();
 
-        EstadiaRevision::create([
+        RevisionAutorizacion::create([
             'user_id' => auth()->user()->id,
             'permiso_estadia_id' => $id,
             'accion' => $idstatus->nombre,
@@ -453,13 +453,13 @@ class PermisoEstadiaController extends AppBaseController
                $visitador = $_GET['visitador'];
                $fecha_visita = $_GET['fecha_visita'];
 
-               $estadia= PermisoEstadia::find($id);
+               $estadia= AutorizacionEvento::find($id);
                $idstatus = Status::find(9);
                $solicitante = User::find($estadia->user_id);
                $estadia->status_id = $idstatus->id;
                $estadia->update();
 
-               EstadiaRevision::create([
+               RevisionAutorizacion::create([
                    'user_id' => auth()->user()->id,
                    'permiso_estadia_id' => $id,
                    'accion' => $idstatus->nombre,
@@ -491,12 +491,12 @@ class PermisoEstadiaController extends AppBaseController
                Flash::success('Visitador asignado y notificación enviada al solicitante.');
                return redirect(route('permisosestadia.index'));
            } if ($status==='10') {
-                $estadia= PermisoEstadia::find($id);
+                $estadia= AutorizacionEvento::find($id);
                 $idstatus = Status::find(10);
                 $estadia->status_id = $idstatus->id;
                 $estadia->update();
 
-                EstadiaRevision::create([
+                RevisionAutorizacion::create([
                     'user_id' => auth()->user()->id,
                     'permiso_estadia_id' => $id,
                     'accion' => $idstatus->nombre,
@@ -506,20 +506,20 @@ class PermisoEstadiaController extends AppBaseController
                 return redirect(route('permisosestadia.index'));
            } if ($status==='1') {
 
-                $estadia= PermisoEstadia::find($id);
+                $estadia= AutorizacionEvento::find($id);
                 if ($estadia->cantidad_solicitud>1) {
                    // dd($estadia->cantidad_solicitud);
                     $ant=($estadia->cantidad_solicitud-1);
                     $nro=substr($estadia->nro_solicitud,0,13);
                     //dd($nro);
                     $status = Status::find(12);
-                    $anterior=PermisoEstadia::where('cantidad_solicitud',$ant)
+                    $anterior=AutorizacionEvento::where('cantidad_solicitud',$ant)
                         ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)
                         ->update(['status_id' => $status->id]);
-                    $query=PermisoEstadia::where('cantidad_solicitud',$ant)
+                    $query=AutorizacionEvento::where('cantidad_solicitud',$ant)
                         ->where(DB::raw("(SUBSTR(nro_solicitud,1,13) = '" . $nro . "')"), '=', true)->get()->last();
                    // dd($query->id);
-                    EstadiaRevision::create([
+                    RevisionAutorizacion::create([
                         'user_id' => auth()->user()->id,
                         'permiso_estadia_id' => $query->id,
                         'accion' => $status->nombre,
@@ -535,7 +535,7 @@ class PermisoEstadiaController extends AppBaseController
                 $vencimiento= date("Y-m-d",$vencimiento);
                 $estadia->vencimiento = $vencimiento;
                 $estadia->update();
-                EstadiaRevision::create([
+                RevisionAutorizacion::create([
                     'user_id' => auth()->user()->id,
                     'permiso_estadia_id' => $id,
                     'accion' => $idstatus->nombre,
@@ -563,7 +563,7 @@ class PermisoEstadiaController extends AppBaseController
                 return redirect(route('permisosestadia.index'));
            } if ($status==='2') {
                 $motivo = $_GET['motivo'];
-                $estadia= PermisoEstadia::find($id);
+                $estadia= AutorizacionEvento::find($id);
                 $idstatus = Status::find(2);
                 $estadia->status_id = $idstatus->id;
                 if ($estadia->cantidad_solicitud==1) {
@@ -573,7 +573,7 @@ class PermisoEstadiaController extends AppBaseController
                 }
                 $estadia->update();
                 $solicitante = User::find($estadia->user_id);
-                EstadiaRevision::create([
+                RevisionAutorizacion::create([
                     'user_id' => auth()->user()->id,
                     'permiso_estadia_id' => $id,
                     'accion' => $idstatus->nombre,
@@ -602,18 +602,18 @@ class PermisoEstadiaController extends AppBaseController
 
     public function SendMail($idsolicitud, $tipo,$mailUser)
     {
-        $solicitud = PermisoEstadia::find($idsolicitud);
+        $solicitud = AutorizacionEvento::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
         $rolecapitan=Role::find(4);
         $rolecoordinador=Role::find(7);
-        $capitanDestino = CapitaniaUser::select('capitania_id', 'email','user_id')
+        $capitanDestino = DepartamentoUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
             ->where('cargo', $rolecapitan->id)
             ->get();
         //dd($capitanDestino);-
 
-        $coordinador = CapitaniaUser::select('capitania_id', 'email','user_id')
+        $coordinador = DepartamentoUser::select('capitania_id', 'email','user_id')
             ->Join('users', 'users.id', '=', 'user_id')
             ->where('capitania_id', '=', $solicitud->capitania_id)
             ->where('cargo', $rolecoordinador->id)
@@ -688,7 +688,7 @@ class PermisoEstadiaController extends AppBaseController
 
     public function SendMailAprobacion($idsolicitud, $mensaje,$subject)
     {
-        $solicitud = PermisoEstadia::find($idsolicitud);
+        $solicitud = AutorizacionEvento::find($idsolicitud);
         $solicitante = User::find($solicitud->user_id);
         $idstatus = Status::find(1);
         $notificacion = new NotificacioneController();

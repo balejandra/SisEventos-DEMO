@@ -1,3 +1,3 @@
 
 
-<div class="ms-auto">&copy; {{date('Y')}} INEA.</div>
+<div class="ms-auto">&copy; {{date('Y')}} Alter-Info C.A.</div>

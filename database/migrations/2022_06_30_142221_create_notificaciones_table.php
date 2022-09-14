@@ -13,13 +13,13 @@ class CreateNotificacionesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_zarpes_schema')->create('notificaciones', function (Blueprint $table) {
+        Schema::create('notificaciones', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('public.users')
                 ->onDelete('cascade')
                 ->onUpdate('cascade');
             $table->string('titulo');
-            $table->string('texto',2000);
+            $table->text('texto');
             $table->string('tipo');
             $table->boolean('visto');
             $table->timestamps();

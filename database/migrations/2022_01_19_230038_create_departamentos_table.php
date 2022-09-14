@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCapitaniasTable extends Migration
+class CreateDepartamentosTable extends Migration
 {
 
     /**
@@ -31,6 +31,6 @@ class CreateCapitaniasTable extends Migration
      */
     public function down()
     {
-        Schema::drop('capitanias');
+        Schema::drop('departamentos');
     }
 }

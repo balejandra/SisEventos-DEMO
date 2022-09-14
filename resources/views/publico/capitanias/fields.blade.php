@@ -12,31 +12,12 @@
     </div>
 
     <div class="form-group col-sm-4">
-        {!! Form::label('capitanes', 'Capitán:') !!}
-        {!! Form::select('capitanes',$capitanes, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un capitan']) !!}
+        {!! Form::label('unidad_inmediata_superior', 'Unidad Inmediata Superior:') !!}
+        {!! Form::text('unidad_inmediata_superior', null, ['class' => 'form-control']) !!}
     </div>
 </div>
 
-{!! Form::label('coordenadas', 'Coordenadas:') !!}
 
-<div class="row">
-    <!-- latitud Field -->
-    <div class="form-group col-sm-4">
-        {!! Form::label('Latitud', 'Latitud:') !!}
-        {!! Form::text('latitud[]', null, ['class' => 'form-control']) !!}
-    </div>
-    <!-- longitud Field -->
-    <div class="form-group col-sm-4">
-        {!! Form::label('longitud', 'Longitud:') !!}
-        {!! Form::text('longitud[]', null, ['class' => 'form-control']) !!}
-    </div>
-    <div class="form-group col-sm-3 pt-4">
-    {!! Form::button('Agregar otras', ['class' => 'btn btn-success', 'onclick' => 'agregarCoordenadas()']) !!}
-    </div>
-</div>
-<div  id="coords" data-cant='1'>
-
-</div>
 
 <!-- Button -->
 <div class="row form-group  mt-4">

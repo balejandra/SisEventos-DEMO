@@ -3,7 +3,7 @@
     <tr>
         <th>Cargo</th>
         <th>Usuario</th>
-        <th>Capitanía</th>
+        <th>Departamento</th>
         <th>Habilitado</th>
         <th>Acciones</th>
     </tr>
@@ -14,27 +14,24 @@
         <tr>
             <td>{{ $capitaniaUser->cargos->name }}</td>
             <td>{{ $capitaniaUser->user->email}}</td>
-            <td>{{ $capitaniaUser->capitania->nombre }}
-        @if (isset($capitaniaUser->establecimientos->nombre))<br>
-           Establecimiento Náutico: {{ $capitaniaUser->establecimientos->nombre }}
-            @endif</td>
+            <td>{{ $capitaniaUser->departamento->nombre }}
             @if ( $capitaniaUser->habilitado ==true)
                 <td>SI</td>
             @else
                 <td>NO</td>
             @endif
             <td>
-                @can('consultar-usuarios-capitanias')
+                @can('consultar-usuarios-departamentos')
                     <a class="btn btn-sm btn-success" href="  {{ route('capitaniaUsers.show', [$capitaniaUser->id]) }}">
                         <i class="fa fa-search"></i>
                     </a>
                 @endcan
-                @can('editar-usuarios-capitanias')
+                @can('editar-usuarios-departamentos')
                     <a class="btn btn-sm btn-info" href=" {{ route('capitaniaUsers.edit', [$capitaniaUser->id]) }}">
                         <i class="fa fa-edit"></i>
                     </a>
                 @endcan
-                @can('eliminar-usuarios-capitanias')
+                @can('eliminar-usuarios-departamentos')
 
                     <div class='btn-group'>
                         {!! Form::open(['route' => ['capitaniaUsers.destroy', $capitaniaUser->id], 'method' => 'delete','class'=>'delete-form']) !!}

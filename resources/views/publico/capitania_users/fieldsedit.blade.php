@@ -4,7 +4,7 @@
 <div class="row">
     <div class="form-group col-md-4 col-sm-12">
         {!! Form::label('cargo', 'Cargo:') !!}
-        {!! Form::select('cargo',$roles, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un cargo','onchange="cargoCapitaniaUser();"']) !!}
+        {!! Form::select('cargo_id',$roles, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un cargo','onchange="cargoCapitaniaUser();"']) !!}
     </div>
 
     <!-- User Id Field -->
@@ -20,18 +20,9 @@
 
     <!-- Capitania Id Field -->
     <div class="form-group col-sm-4">
-        {!! Form::label('capitania_id', 'Capitanía:') !!}
-        {!! Form::select('capitania_id', $capitania, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione una capitania','onchange="EstablecimientoUser();"']) !!}
+        {!! Form::label('departamento_id', 'Departamento:') !!}
+        {!! Form::select('departamento_id', $capitania, null, ['class' => 'form-control custom-select','placeholder' => 'Seleccione un Departamento','onchange="EstablecimientoUser();"']) !!}
     </div>
-    @if (($capitaniaUser->cargo==5) ||($capitaniaUser->cargo==6))
-        <div class="form-group col-sm-6" id="divestablecimiento" style="display: block">
-            @else
-                <div class="form-group col-sm-6" id="divestablecimiento" style="display: none">
-                    @endif
-                    {!! Form::label('establecimientos', 'Establecimiento Náutico Asignado:') !!}
-                    {!! Form::select('establecimiento_nautico_id',$establecimientos, null, ['id'=>'establecimientos','class' => ' form-control custom-select','placeholder' => 'Esta...']) !!}
-                </div>
-
         <div class="form-group mt-4 col-sm-2">
             <label class="checkbox-inline">
                 {!! Form::hidden('habilitado', 0) !!}

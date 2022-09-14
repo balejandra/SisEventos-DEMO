@@ -21,7 +21,6 @@ class Status extends Model implements Auditable
     use HasFactory;
     use \OwenIt\Auditing\Auditable;
 
-    protected $connection = 'pgsql_zarpes_schema';
     public $table = 'status';
 
 
@@ -52,8 +51,4 @@ class Status extends Model implements Auditable
         'nombre' => 'required'
     ];
 
-    public function permisozarpe()
-    {
-        return $this->hasOne(PermisoZarpe::class);
-    }
 }

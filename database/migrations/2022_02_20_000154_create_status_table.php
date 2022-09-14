@@ -13,7 +13,7 @@ class CreateStatusTable extends Migration
      */
     public function up()
     {
-        Schema::connection('pgsql_zarpes_schema')->create('status', function (Blueprint $table) {
+        Schema::create('status', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->timestamps();
@@ -28,6 +28,6 @@ class CreateStatusTable extends Migration
      */
     public function down()
     {
-        Schema::connection('pgsql_zarpes_schema')->dropIfExists('status');
+        Schema::dropIfExists('status');
     }
 }
