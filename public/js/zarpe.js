@@ -1,3 +1,35 @@
+window.addEventListener('DOMContentLoaded', (evento) => {
+    var today = new Date();
+
+// obtener la fecha de hoy en formato `MM/DD/YYYY`
+var dias = 15; // Número de días a agregar
+    today.setDate(today.getDate()+dias);
+    let now = today.toISOString().split('T')[0];
+// Asignar valor mínimo
+console.log(now)
+    document.querySelector('#fecha').min = now
+});
+
+function Fecha15dias(){
+    var evento =document.getElementById('fecha').value;
+    var today = new Date();
+
+// obtener la fecha de hoy en formato `MM/DD/YYYY`
+    var dias = 15; // Número de días a agregar
+    today.setDate(today.getDate()+dias);
+    let now = today.toISOString().split('T')[0];
+
+    if(evento>now){
+
+        document.getElementById("msjRuta").innerHTML="<div class='alert alert-danger'>La solicitud debe realizarse 15 días hábiles antes de la fecha del evento</div>"
+        evento.value="";
+    }
+}
+
+
+
+/////////////////////////////////////////////////////////////////
+
 function getmatricula(siglas,destinacion,numero) {
     let divError = document.getElementById("errorMat");
     let table = document.getElementById("table-buque");

@@ -1,52 +1,49 @@
-<div class="table-responsive-sm">
-    <table class="table table-striped" id="autorizacionEventos-table">
+<table class="table table-striped table-bordered display2" style="width:100%">
         <thead>
             <tr>
-                <th>Id</th>
-        <th>Nro Solicitud</th>
-        <th>User Id</th>
-        <th>Nombre Evento</th>
-        <th>Fecha</th>
-        <th>Horario</th>
-        <th>Lugar</th>
-        <th>Cant Organizadores</th>
-        <th>Cant Asistentes</th>
-        <th>Nombre Contacto</th>
-        <th>Telefono Contacto</th>
-        <th>Email Contacto</th>
-        <th>Vigencia</th>
-        <th>Status Id</th>
-                <th colspan="3">Action</th>
+                <th>Nro Solicitud</th>
+                <th>Solicitante</th>
+                <th>Nombre Evento</th>
+                <th>Fecha</th>
+                <th>Lugar</th>
+                <th>Estatus</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
         @foreach($autorizacionEventos as $autorizacionEvento)
             <tr>
-                <td>{{ $autorizacionEvento->id }}</td>
             <td>{{ $autorizacionEvento->nro_solicitud }}</td>
             <td>{{ $autorizacionEvento->user_id }}</td>
             <td>{{ $autorizacionEvento->nombre_evento }}</td>
             <td>{{ $autorizacionEvento->fecha }}</td>
-            <td>{{ $autorizacionEvento->horario }}</td>
             <td>{{ $autorizacionEvento->lugar }}</td>
-            <td>{{ $autorizacionEvento->cant_organizadores }}</td>
-            <td>{{ $autorizacionEvento->cant_asistentes }}</td>
-            <td>{{ $autorizacionEvento->nombre_contacto }}</td>
-            <td>{{ $autorizacionEvento->telefono_contacto }}</td>
-            <td>{{ $autorizacionEvento->email_contacto }}</td>
-            <td>{{ $autorizacionEvento->vigencia }}</td>
-            <td>{{ $autorizacionEvento->status_id }}</td>
+                @if ($autorizacionEvento->status->id==1)
+                    <td class="text-success">{{ $autorizacionEvento->status->nombre}} </td>
+                @elseif($autorizacionEvento->status->id==2)
+                    <td class="text-danger">{{ $autorizacionEvento->status->nombre}} </td>
+                @elseif($autorizacionEvento->status->id==3)
+                    <td class="text-warning">{{ $autorizacionEvento->status->nombre}} </td>
+                @elseif($autorizacionEvento->status->id==4)
+                    <td style="color: #fd7e14">{{$autorizacionEvento->status->nombre}}</td>
+                @elseif($autorizacionEvento->status->id==5)
+                    <td><span class="text-warning bg-dark">{{$autorizacionEvento->status->nombre}}</span></td>
+                @elseif($autorizacionEvento->status->id==6)
+                    <td class="text-primary">{{ $autorizacionEvento->status->nombre}} </td>
+                @elseif($autorizacionEvento->status->id==7)
+                    <td style="color: #770bba">{{ $autorizacionEvento->status->nombre}} </td>
+                @else
+                    <td>{{ $autorizacionEvento->status->nombre}} </td>
+                @endif
                 <td>
-                    {!! Form::open(['route' => ['autorizacionEventos.destroy', $autorizacionEvento->id], 'method' => 'delete']) !!}
-                    <div class='btn-group'>
-                        <a href="{{ route('autorizacionEventos.show', [$autorizacionEvento->id]) }}" class='btn btn-ghost-success'><i class="fa fa-eye"></i></a>
-                        <a href="{{ route('autorizacionEventos.edit', [$autorizacionEvento->id]) }}" class='btn btn-ghost-info'><i class="fa fa-edit"></i></a>
-                        {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit', 'class' => 'btn btn-ghost-danger', 'onclick' => "return confirm('Are you sure?')"]) !!}
-                    </div>
-                    {!! Form::close() !!}
+                    @can('consultar-evento')
+                        <a class="btn btn-sm btn-success"
+                           href="  {{ route('autorizacionEventos.show', $autorizacionEvento['id']) }}">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    @endcan
                 </td>
             </tr>
         @endforeach
         </tbody>
     </table>
-</div>
