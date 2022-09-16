@@ -441,7 +441,7 @@ class AutorizacionEventoController extends Controller{
     } if ($status==='1') {
         $monto_pagar_petros = $_GET['monto_pagar_petros'];
         $estadia= AutorizacionEvento::find($id);
-
+        $solicitante = User::find($estadia->user_id);
         $idstatus = Status::find(1);
         $estadia->status_id = $idstatus->id;
         $estadia->update();
@@ -461,7 +461,20 @@ class AutorizacionEventoController extends Controller{
             $subject = 'Solicitud de Autorización de Evento ' . $estadia->nro_solicitud;
             $mensaje = "Su solicitud de Autorización de Evento N°: " . $estadia->nro_solicitud . " registrada ha sido " . $idstatus->nombre;
 
-        $this->SendMailAprobacion($estadia->id, $mensaje,$subject);
+        $data = [
+            'id'=>$id,
+            'solicitud' => $estadia->nro_solicitud,
+            'nombre' => $estadia->nombre_evento,
+            'lugar' => $estadia->lugar,
+            'fecha' => $estadia->fecha,
+            'mensaje' => $mensaje,
+        ];
+
+        $email=new MailController();
+        $view = 'emails.estadias.solicitud';
+
+        $email->mailZarpe($solicitante->email, $subject, $data, $view);
+        $notificacion->storeNotificaciones($estadia->user_id, $subject,  $mensaje, "Solicitud de Autorización de Evento");
 
         Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
         return redirect(route('autorizacionEventos.index'));

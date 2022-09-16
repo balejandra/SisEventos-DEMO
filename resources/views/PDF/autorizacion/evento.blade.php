@@ -204,12 +204,12 @@
         <table>
             <thead>
             <tr>
-                <th>NOMBRE DEL BUQUE <br>Vessel'sname</th>
-                <th>NÚMERO DE REGISTRO <br>Number of Register</th>
-                <th>TIPO DE BUQUE <br>Type of ship</th>
-                <th>NACIONALIDAD DEL BUQUE <br>Ship flag</th>
-                <th>PROPIETARIO <br>Ship Owner</th>
-                <th>NOMBRE DEL CAPITÁN <br>Captain's name</th>
+                <th>NOMBRE DEL EVENTO</th>
+                <th>FECHA EVENTO</th>
+                <th>HORARIO DEL EVENTO</th>
+                <th>LUGAR DEL EVENTO</th>
+                <th>NOMBRE CONTACTO</th>
+                <th>TELEFONO CONTACTO</th>
             </tr>
             </thead>
             <tbody>

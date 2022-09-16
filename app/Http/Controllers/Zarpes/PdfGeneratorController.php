@@ -115,7 +115,7 @@ class PdfGeneratorController extends Controller
 
     }
 
-    public function correoEstadia($id){
+    public function correoEvento($id){
        $estadia=AutorizacionEvento::find($id);
         $pdf=PDF::loadView('PDF.autorizacion.evento', compact('estadia'))->stream();
         return $pdf;
