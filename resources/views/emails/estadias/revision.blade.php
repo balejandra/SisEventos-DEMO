@@ -5,14 +5,13 @@
     {{$mensaje}}
 
 @component('mail::panel')
-    <h2>Nombre Embarcación: {{$nombre_buque}} </h2>
-    <h2>Buque Registro Nro.: {{$matricula}} </h2>
+    <h2>Nombre Evento: {{$nombre_evento}} </h2>
+    <h2>Fecha y Hora Evento: {{$fecha}} {{$hora}} </h2>
     @if ($idstatus==2)
     <h2>Motivo Rechazo: {{$motivo}} </h2>
     @endif
 @endcomponent
 @component('mail::subcopy')
-    Instituto Nacional de Los Espacios Acuáticos - INEA. Síguenos en: <a href="http://twitter.com/#!/INEA200">http://twitter.com/#!/INEA200</a>
 
 @endcomponent
 @component('mail::footer')

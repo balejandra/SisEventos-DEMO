@@ -21,9 +21,9 @@ class CreatePagosEventosTable extends Migration
                 ->onUpdate('cascade');
             $table->double('monto_pagar_petros');
             $table->double('monto_pagar_bolivares');
-            $table->string('forma_pago');
-            $table->string('codigo_transaccion');
-            $table->string('fecha_pago');
+            $table->string('forma_pago')->nullable();
+            $table->string('codigo_transaccion')->nullable();
+            $table->string('fecha_pago')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -24,6 +24,10 @@
                              <div class="card-header">
                                  <i class="fas fa-umbrella-beach"></i>
                                  <strong>Consultar Autorización Eventos</strong>
+                                 <div class="card-header-actions">
+                                     <a href="{{route('autorizacionEventos.index')}} "
+                                        class="btn btn-primary btn-sm">Cancelar</a>
+                                 </div>
                              </div>
                              <div class="card-body">
                                  @include('autorizacion_eventos.show_fields')

@@ -2259,7 +2259,7 @@ function modalrechazarestadia(id,solicitud) {
     var soli = document.getElementById('solicitudrechazo');
     soli.textContent = solicitud
     let frm1 = document.getElementById('rechazar-estadia');
-    frm1.setAttribute('action',  route('statusEstadia', {id:id,status:2}));
+    frm1.setAttribute('action',  route('updateStatus', {id:id,status:2}));
 }
 
 function modalrechazarzarpe(id,solicitud) {

@@ -19,10 +19,9 @@ function Fecha15dias(){
     today.setDate(today.getDate()+dias);
     let now = today.toISOString().split('T')[0];
 
-    if(evento>now){
-
+    if(evento<now){
         document.getElementById("msjRuta").innerHTML="<div class='alert alert-danger'>La solicitud debe realizarse 15 días hábiles antes de la fecha del evento</div>"
-        evento.value="";
+        document.getElementById('fecha').value = "";
     }
 }
 

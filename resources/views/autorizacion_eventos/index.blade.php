@@ -19,9 +19,12 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fa fa-align-justify"></i>
-                             Autorización Eventos
-                             <a class="pull-right" href="{{ route('autorizacionEventos.create') }}"><i class="fa fa-plus-square fa-lg"></i></a>
+                             <i class="fas fa-umbrella-beach"></i>
+                             <strong>Solicitud de Autorización Eventos</strong>
+
+                                 <div class="card-header-actions">
+                                     <a class="btn btn-primary btn-sm"  href="{{ route('autorizacionEventos.create') }}">Nuevo</a>
+                                 </div>
                          </div>
                          <div class="card-body">
                              @include('autorizacion_eventos.table')

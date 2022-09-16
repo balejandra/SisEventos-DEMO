@@ -3,10 +3,18 @@
 namespace App\Http\Controllers\SATIM;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SATIM\CreateAutorizacionEventoRequest;
+use App\Http\Controllers\Zarpes\MailController;
+use App\Http\Controllers\Zarpes\NotificacioneController;
 use App\Models\SATIM\AutorizacionEvento;
 use App\Models\SATIM\DocumentoAutorizacion;
+use App\Models\SATIM\RevisionAutorizacion;
+use App\Models\SATIM\Status;
+use App\Models\User;
 use App\Repositories\SATIM\AutorizacionEventoRepository;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Flash;
+use Response;
 
 
 class AutorizacionEventoController extends Controller{
@@ -58,16 +66,16 @@ class AutorizacionEventoController extends Controller{
     /**
      * Store a newly created AutorizacionEvento in storage.
      *
-     * @param CreateAutorizacionEventoRequest $request
+     * @param Request $request
      *
      * @return Response
      */
-    public function store(CreateAutorizacionEventoRequest $request)
+    public function store(Request $request)
     {
         $validated= $request->validate([
             'nombre_evento' => 'required|string|max:255',
             'fecha' => 'required|date',
-            'horario' => 'required|time',
+            'horario' => 'required|date_format:H:i',
             'lugar' =>'required|string|max:255',
             'cant_organizadores' => 'required|numeric|min:1|max:99999999',
             'cant_asistentes' =>'required|numeric|min:1|max:99999999',
@@ -75,8 +83,6 @@ class AutorizacionEventoController extends Controller{
             'telefono_contacto' => 'required|string|max:255',
             'email_contacto' =>'required|string|max:255',
         ]);
-
-            $notificacion = new NotificacioneController();
 
             $estadia = new AutorizacionEvento();
             $estadia->nro_solicitud = $this->codigo();
@@ -98,7 +104,7 @@ class AutorizacionEventoController extends Controller{
                 $cedula = $request->file('cedula');
                 $filenamepro = date('dmYGi') . $cedula->getClientOriginalName();
                 $filenamepronew = str_replace(' ','',$filenamepro);
-                $avatar1 = $cedula>move(public_path() . '/documentos/autorizacionevento', $filenamepronew);
+                $avatar1 = $cedula->move(public_path() . '/documentos/autorizacionevento', $filenamepronew);
                 $documento1->autorizacion_evento_id = $estadia->id;
                 $documento1->documento = $filenamepronew;
                 $documento1->recaudo = 'Cédula de Identidad del Solicitante y responsable Legal';
@@ -167,7 +173,7 @@ class AutorizacionEventoController extends Controller{
             $fileorig7 = $request->file('listado_equipos');
             $filename7 = date('dmYGi') . $fileorig7->getClientOriginalName();
             $filenamenew7 = str_replace(' ','',$filename7);
-            $avatar5 = $fileorig6->move(public_path() . '/documentos/autorizacionevento', $filenamenew7);
+            $avatar5 = $fileorig7->move(public_path() . '/documentos/autorizacionevento', $filenamenew7);
             $documento7->autorizacion_evento_id = $estadia->id;
             $documento7->documento = $filenamenew7;
             $documento7->recaudo = 'Listado de equipos a utilizar (si aplica)';
@@ -195,13 +201,12 @@ class AutorizacionEventoController extends Controller{
     private function codigo()
     {
         $cantidadActual = AutorizacionEvento::select(DB::raw('count(nro_solicitud) as cantidad'))
-            ->where('cantidad_solicitud',1)
-            ->where(DB::raw("(SUBSTR(nro_solicitud,6,4) = '" . date('Y') . "')"), '=', true)
+            ->where(DB::raw("(SUBSTR(nro_solicitud,8,8) = '" . date('Y') . "')"), '=', true)
             ->get();
 
         $correlativo = $cantidadActual[0]->cantidad + 1;
         $codigo = "SOAE-". $correlativo . "-".date('Y') ;
-        dd($codigo);
+      //  dd($codigo);
         return $codigo;
     }
 
@@ -300,6 +305,8 @@ class AutorizacionEventoController extends Controller{
     public function show($id)
     {
         $autorizacionEvento = $this->autorizacionEventoRepository->find($id);
+        $documentos = DocumentoAutorizacion::where('autorizacion_evento_id', $id)->get();
+        $revisiones=RevisionAutorizacion::where('autorizacion_evento_id',$id)->get();
 
         if (empty($autorizacionEvento)) {
             Flash::error('Autorizacion Evento not found');
@@ -307,7 +314,10 @@ class AutorizacionEventoController extends Controller{
             return redirect(route('autorizacionEventos.index'));
         }
 
-        return view('autorizacion_eventos.show')->with('autorizacionEvento', $autorizacionEvento);
+        return view('autorizacion_eventos.show')
+            ->with('autorizacionEvento', $autorizacionEvento)
+            ->with('documentos', $documentos)
+            ->with('revisiones',$revisiones);
     }
 
     /**
@@ -380,4 +390,122 @@ class AutorizacionEventoController extends Controller{
 
         return redirect(route('autorizacionEventos.index'));
     }
+
+    public function updateStatus($id, $status)
+    {
+        $email = new MailController();
+        $notificacion = new NotificacioneController();
+        if ($status=== "9") {
+            $visitador = $_GET['visitador'];
+            $fecha_visita = $_GET['fecha_visita'];
+
+            $estadia= AutorizacionEvento::find($id);
+            $idstatus = Status::find(9);
+            $solicitante = User::find($estadia->user_id);
+            $estadia->status_id = $idstatus->id;
+            $estadia->update();
+
+            RevisionAutorizacion::create([
+                'user_id' => auth()->user()->id,
+                'permiso_estadia_id' => $id,
+                'accion' => $idstatus->nombre,
+                'motivo' => 'Visitador asignado'
+            ]);
+
+           /* VisitaPermisoEstadia::create([
+                'permiso_estadia_id' => $id,
+                'nombre_visitador' => $visitador,
+                'fecha_visita' => $fecha_visita,
+            ]);
+            $data = [
+                'solicitud' => $estadia->nro_solicitud,
+                'id'=>$id,
+                'nombres_solic' => $solicitante->nombres,
+                'apellidos_solic' => $solicitante->apellidos,
+                'matricula' => $estadia->nro_registro,
+                'visitador' => $visitador,
+                'fecha_visita'=>$fecha_visita,
+            ];
+            $view = 'emails.estadias.visita';
+            $subject = 'Solicitud de Permiso de Estadía ' . $estadia->nro_solicitud;
+            $mensaje="Saludos, a su Solicitud de Permiso de Estadía N° ".$estadia->nro_solicitud." se le ha asignado un visitador, con el siguiente detalle:";
+            $mensaje.=" <br><b>Buque Registro Nro.:</b> ".$estadia->nro_registro." <br> <b>Solicitante:</b> ".$solicitante->nombres." ".$solicitante->apellidos." <br> <b>Visitador:</b> ".$visitador." <br> <b>Fecha de la visita:</b> ".$fecha_visita;
+
+            $notificacion->storeNotificaciones($estadia->user_id, $subject,  $mensaje, "Permiso de Estadía");
+            $email->mailZarpe($solicitante->email, $subject, $data, $view);*/
+
+            Flash::success('Visitador asignado y notificación enviada al solicitante.');
+            return redirect(route('permisosestadia.index'));
+
+    } if ($status==='1') {
+
+        $estadia= AutorizacionEvento::find($id);
+
+        $idstatus = Status::find(1);
+        $estadia->status_id = $idstatus->id;
+        $estadia->update();
+        RevisionAutorizacion::create([
+            'user_id' => auth()->user()->id,
+            'autorizacion_evento_id' => $id,
+            'accion' => $idstatus->nombre,
+            'motivo' => 'Autorización Evento Aprobada'
+        ]);
+
+            $subject = 'Solicitud de Autorización de Evento ' . $estadia->nro_solicitud;
+            $mensaje = "Su solicitud de Autorización de Evento N°: " . $estadia->nro_solicitud . " registrada ha sido " . $idstatus->nombre;
+
+        $this->SendMailAprobacion($estadia->id, $mensaje,$subject);
+
+        Flash::success('Solicitud aprobada y correo enviado al usuario solicitante.');
+        return redirect(route('autorizacionEventos.index'));
+    } if ($status==='2') {
+        $motivo = $_GET['motivo'];
+        $estadia= AutorizacionEvento::find($id);
+        $idstatus = Status::find(2);
+        $estadia->status_id = $idstatus->id;
+        $estadia->update();
+        $solicitante = User::find($estadia->user_id);
+        RevisionAutorizacion::create([
+            'user_id' => auth()->user()->id,
+            'autorizacion_evento_id' => $id,
+            'accion' => $idstatus->nombre,
+            'motivo' => $motivo
+        ]);
+        $subject = 'Solicitud de Autorización de Evento ' . $estadia->nro_solicitud;
+        $mensaje = "Su solicitud de Autorización de Evento N°: " . $estadia->nro_solicitud . " registrada ha sido " . $idstatus->nombre;
+
+        $this->SendMailAprobacion($estadia->id, $mensaje,$subject);
+
+        Flash::error('Solicitud rechazada y correo enviado al usuario solicitante.');
+        return redirect(route('autorizacionEventos.index'));
+    }
+    }
+
+    public function SendMailAprobacion($idsolicitud, $mensaje,$subject)
+    {
+        $solicitud = AutorizacionEvento::find($idsolicitud);
+        $solicitante = User::find($solicitud->user_id);
+        $idstatus = Status::find(1);
+        $notificacion = new NotificacioneController();
+
+        $data = [
+            'solicitud' => $solicitud->nro_solicitud,
+            'id'=>$idsolicitud,
+            'idstatus' => $idstatus->id,
+            'status' => $idstatus->nombre,
+            'nombre_evento' => $solicitud->nombre_evento,
+            'fecha' => $solicitud->fecha,
+            'hora' => $solicitud->hora,
+            'mensaje'=>$mensaje,
+        ];
+
+        $email=new MailController();
+        $view = 'emails.estadias.revision';
+
+        $email->mailEvento($solicitante->email, $subject, $data, $view);
+        $notificacion->storeNotificaciones($solicitud->user_id, $subject,  $mensaje, "Autorización de Evento");
+
+    }
+
+
 }

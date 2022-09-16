@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                {!! Form::open(['route' => 'autorizacionEventos.store']) !!}
+                                {!! Form::open(['route' => 'autorizacionEventos.store', 'files' => true]) !!}
 
                                    @include('autorizacion_eventos.fields')
 

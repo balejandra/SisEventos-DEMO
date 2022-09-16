@@ -57,7 +57,7 @@ class AutorizacionEvento extends Model implements Auditable
         'user_id' => 'integer',
         'nombre_evento' => 'string',
         'fecha' => 'date',
-        'horario' => 'time',
+        'horario' => 'datetime:H:i',
         'lugar' => 'string',
         'cant_organizadores' => 'integer',
         'cant_asistentes' => 'integer',
@@ -74,17 +74,7 @@ class AutorizacionEvento extends Model implements Auditable
      * @var array
      */
     public static $rules = [
-        'nro_solicitud' => 'required',
-        'user_id' => 'required',
-        'nombre_evento' => 'required',
-        'fecha' => 'required',
-        'horario' => 'required',
-        'lugar' => 'required',
-        'cant_organizadores' => 'required',
-        'cant_asistentes' => 'required',
-        'nombre_contacto'=> 'required',
-        'telefono_contacto'=> 'required',
-        'email_contacto'=> 'required',
+
     ];
 
 
