@@ -48,7 +48,7 @@
                             @if ($autorizacionEvento->status_id===3)
                                 <a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#aprobacion" data-toggle="tooltip"
                                    data-bs-placement="bottom" title="Asignar Visitador"
-                                   onclick="modalvisita({{$autorizacionEvento->id}},'{{$autorizacionEvento->nro_solicitud}}');">
+                                   onclick="modalaprobacion({{$autorizacionEvento->id}},'{{$autorizacionEvento->nro_solicitud}}');">
                                     <i class="fa fa-check"></i>
                                 </a>
                             @endif
@@ -116,7 +116,7 @@
 <!-- Modal Aprobacion -->
 <div class="modal fade" id="aprobacion" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
      aria-hidden="true">
-    <form id="visita" action="" class="modal-form">
+    <form id="form_aprobacion" action="" class="modal-form">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -127,23 +127,14 @@
                     <p>Por favor llene los datos necesarios para la Aprobacion de la solicitud Nro. <span id="solicitud"></span></p>
                     <div class="row">
                         <div class="form-group col-sm-6">
-                            {!! Form::label('visitador', 'Nombres y Apellidos del Visitador:') !!}
-                            {!! Form::text('visitador', null, ['class' => 'form-control', 'required']) !!}
-                        </div>
-                        @php
-                            $fechaActual=new DateTime();
-                            $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
-                            $fechaActual=$fechaActual->format('Y-m-d');
-                        @endphp
-                        <div class="form-group col-sm-6">
-                            {!! Form::label('fecha_visita', 'Fecha de Visita:') !!}
-                            <input type="date" name="fecha_visita" id="fecha_visita"  class="form-control" min="{{$fechaActual}}" max="9999-12-31" required>
+                            {!! Form::label('visitador', 'Monto a Pagar Petro:') !!}
+                            {!! Form::text('monto_pagar_petros', null, ['class' => 'form-control', 'required']) !!}
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" data-action="ASIGNAR VISITA">Asignar</button>
+                    <button type="submit" class="btn btn-primary" data-action="APROBAR">Aprobar</button>
                 </div>
             </div>
         </div>

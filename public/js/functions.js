@@ -2255,6 +2255,14 @@ function modalvisita(id,solicitud) {
     let frm1 = document.getElementById('visita');
     frm1.setAttribute('action',  route('statusEstadia', {id:id,status:9}));
 }
+
+function modalaprobacion(id,solicitud) {
+    var soli = document.getElementById('solicitud');
+    soli.textContent = solicitud
+    let frm1 = document.getElementById('form_aprobacion');
+    frm1.setAttribute('action',  route('updateStatus', {id:id,status:1}));
+}
+
 function modalrechazarestadia(id,solicitud) {
     var soli = document.getElementById('solicitudrechazo');
     soli.textContent = solicitud

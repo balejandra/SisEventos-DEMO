@@ -7,6 +7,7 @@ use App\Http\Controllers\Zarpes\MailController;
 use App\Http\Controllers\Zarpes\NotificacioneController;
 use App\Models\SATIM\AutorizacionEvento;
 use App\Models\SATIM\DocumentoAutorizacion;
+use App\Models\SATIM\PagoEvento;
 use App\Models\SATIM\RevisionAutorizacion;
 use App\Models\SATIM\Status;
 use App\Models\User;
@@ -438,7 +439,7 @@ class AutorizacionEventoController extends Controller{
             return redirect(route('permisosestadia.index'));
 
     } if ($status==='1') {
-
+        $monto_pagar_petros = $_GET['monto_pagar_petros'];
         $estadia= AutorizacionEvento::find($id);
 
         $idstatus = Status::find(1);
@@ -450,6 +451,12 @@ class AutorizacionEventoController extends Controller{
             'accion' => $idstatus->nombre,
             'motivo' => 'Autorización Evento Aprobada'
         ]);
+
+        $pago= new PagoEvento();
+        $pago->autorizacion_evento_id=$id;
+        $pago->monto_pagar_petros=$monto_pagar_petros;
+        $pago->monto_pagar_bolivares=($monto_pagar_petros*481.7640);
+        $pago->save();
 
             $subject = 'Solicitud de Autorización de Evento ' . $estadia->nro_solicitud;
             $mensaje = "Su solicitud de Autorización de Evento N°: " . $estadia->nro_solicitud . " registrada ha sido " . $idstatus->nombre;
