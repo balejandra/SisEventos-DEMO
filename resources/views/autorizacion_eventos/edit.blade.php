@@ -1,12 +1,20 @@
 @extends('layouts.app')
-
+@section("titulo")
+    Equipos
+@endsection
 @section('content')
-    <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-             <a href="{!! route('autorizacionEventos.index') !!}">Autorizacion Evento</a>
-          </li>
-          <li class="breadcrumb-item active">Edit</li>
-        </ol>
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+                <li class="breadcrumb-item">
+                    <a href="{!! route('equipos.index') !!}">Equipos</a>
+                </li>
+                <li class="breadcrumb-item active">Editar</li>
+            </ol>
+        </nav>
+    </div>
+    </header>
     <div class="container-fluid">
          <div class="animated fadeIn">
              @include('coreui-templates::common.errors')
@@ -14,8 +22,11 @@
                  <div class="col-lg-12">
                       <div class="card">
                           <div class="card-header">
-                              <i class="fa fa-edit fa-lg"></i>
-                              <strong>Edit Autorizacion Evento</strong>
+                              <i class="fas fa-shield-alt"></i>
+                              <strong>Editar Autorización Eventos</strong>
+                              <div class="card-header-actions">
+
+                              </div>
                           </div>
                           <div class="card-body">
                               {!! Form::model($autorizacionEvento, ['route' => ['autorizacionEventos.update', $autorizacionEvento->id], 'method' => 'patch']) !!}

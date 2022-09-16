@@ -117,8 +117,7 @@ class PdfGeneratorController extends Controller
 
     public function correoEstadia($id){
        $estadia=AutorizacionEvento::find($id);
-        $capitania= Departamento::where('id',$estadia->capitania_id)->first();
-        $pdf=PDF::loadView('PDF.estadias.permiso', compact('estadia','capitania'))->stream();
+        $pdf=PDF::loadView('PDF.autorizacion.evento', compact('estadia'))->stream();
         return $pdf;
 
     }
