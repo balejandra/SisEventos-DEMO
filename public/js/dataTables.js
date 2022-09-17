@@ -3,7 +3,7 @@ $(document).ready(function() {
         responsive: true,
         autoWidth: true,
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [
@@ -52,7 +52,7 @@ $(document).ready(function() {
             { responsivePriority: 2, targets: -1 }
         ],
         language: {
-            "url": "../public/assets/DataTables/es_es.json"
+            "url": "../assets/DataTables/es_es.json"
         },
         dom: 'Blfrtp',
         buttons: [

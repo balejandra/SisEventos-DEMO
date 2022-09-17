@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SATIM;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Zarpes\MailController;
 use App\Http\Controllers\Zarpes\NotificacioneController;
+use App\Models\Publico\Petro;
 use App\Models\SATIM\AutorizacionEvento;
 use App\Models\SATIM\DocumentoAutorizacion;
 use App\Models\SATIM\PagoEvento;
@@ -211,91 +212,6 @@ class AutorizacionEventoController extends Controller
         return $codigo;
     }
 
-    public function SendMail($idsolicitud, $tipo, $mailUser)
-    {
-        $solicitud = AutorizacionEvento::find($idsolicitud);
-        $solicitante = User::find($solicitud->user_id);
-        $rolecapitan = Role::find(4);
-        $rolecoordinador = Role::find(5);
-        $capitanDestino = DepartamentoUser::select('capitania_id', 'email', 'user_id')
-            ->Join('users', 'users.id', '=', 'user_id')
-            ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecapitan->id)
-            ->get();
-        //dd($capitanDestino);-
-
-        $coordinador = DepartamentoUser::select('capitania_id', 'email', 'user_id')
-            ->Join('users', 'users.id', '=', 'user_id')
-            ->where('capitania_id', '=', $solicitud->capitania_id)
-            ->where('cargo', $rolecoordinador->id)
-            ->get();
-        //dd($coordinador);
-        $notificacion = new NotificacioneController();
-
-        $mensaje = "";
-        $mailTo = "";
-        $idTo = "";
-        $subject = "";
-
-        if ($tipo == 1) {
-            if (isset($coordinador[0]->email)) {
-                $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que ha recibido una nueva solicitud de permiso
-    de Estadía en su jurisdicción que espera por su asignación de visita.";
-                $mailTo = $coordinador[0]->email;
-                $idTo = $coordinador[0]->user_id;
-                $subject = 'Nueva solicitud de permiso de Estadía ' . $solicitud->nro_solicitud;
-            } else {
-            }
-
-        } else {
-            if (isset($capitanDestino[0]->email)) {
-                $mensaje = "El sistema de control y gestion de zarpes del INEA le notifica que
-    la siguiente embarcación Internacional tiene una solicitud para arribar a su jurisdicción.";
-                $mailTo = $capitanDestino[0]->email;
-                $idTo = $capitanDestino[0]->user_id;
-
-                $subject = 'Notificación de arribo Internacional ' . $solicitud->nro_solicitud;
-            } else {
-
-            }
-        }
-
-        if ($mailUser == true) {
-            $emailUser = new MailController();
-            $mensajeUser = "El sistema de control y gestion de zarpes del INEA le notifica que ha generado una nueva solicitud de permiso
-            de Estadía con su usuario y se espera de asignación de visita.";
-            $dataUser = [
-                'solicitud' => $solicitud->nro_solicitud,
-                'matricula' => $solicitud->nro_registro,
-                'nombre_buque' => $solicitud->nombre_buque,
-                'nombres_solic' => $solicitante->nombres,
-                'apellidos_solic' => $solicitante->apellidos,
-                'mensaje' => $mensaje,
-            ];
-            $view = 'emails.estadias.solicitud';
-            $subject = 'Nueva solicitud de permiso de Estadía ' . $solicitud->nro_solicitud;
-            $emailUser->mailZarpe($solicitante->email, $subject, $dataUser, $view);
-            $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensajeUser, "Permiso de Estadía");
-
-        }
-
-
-        $data = [
-            'solicitud' => $solicitud->nro_solicitud,
-            'matricula' => $solicitud->nro_registro,
-            'nombre_buque' => $solicitud->nombre_buque,
-            'nombres_solic' => $solicitante->nombres,
-            'apellidos_solic' => $solicitante->apellidos,
-            'mensaje' => $mensaje,
-        ];
-
-        $email = new MailController();
-        $view = 'emails.estadias.solicitud';
-
-        $email->mailZarpe($mailTo, $subject, $data, $view);
-        $notificacion->storeNotificaciones($idTo, $subject, $mensaje, "Permiso de Estadía");
-
-    }
 
     /**
      * Display the specified AutorizacionEvento.
@@ -395,16 +311,19 @@ class AutorizacionEventoController extends Controller
         return redirect(route('autorizacionEventos.index'));
     }
 
+
     public function updateStatus($id, $status)
     {
         $notificacion = new NotificacioneController();
 
         if ($status === '1') {
+            $petrodia=Petro::select("monto")->latest()->first();
             $monto_pagar_petros = $_GET['monto_pagar_petros'];
             $estadia = AutorizacionEvento::find($id);
             $solicitante = User::find($estadia->user_id);
             $idstatus = Status::find(1);
             $estadia->status_id = $idstatus->id;
+
             $estadia->update();
             RevisionAutorizacion::create([
                 'user_id' => auth()->user()->id,
@@ -416,7 +335,7 @@ class AutorizacionEventoController extends Controller
             $pago = new PagoEvento();
             $pago->autorizacion_evento_id = $id;
             $pago->monto_pagar_petros = $monto_pagar_petros;
-            $pago->monto_pagar_bolivares = ($monto_pagar_petros * 481.7640);
+            $pago->monto_pagar_bolivares = ($monto_pagar_petros * $petrodia->monto);
             $pago->save();
 
             $subject = 'Solicitud de Autorización de Evento ' . $estadia->nro_solicitud;
@@ -546,7 +465,7 @@ class AutorizacionEventoController extends Controller
         $view = 'emails.estadias.revision';
 
         $email->mailEvento($solicitante->email, $subject, $data, $view);
-        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensaje, "Autorización de Evento");
+        $notificacion->storeNotificaciones($solicitud->user_id, $subject, $mensaje, "Solicitud de Autorización de Evento");
 
     }
 
