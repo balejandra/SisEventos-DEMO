@@ -95,6 +95,13 @@ class seederPermissions extends Seeder
             'consultar-tasas',
             'eliminar-tasas',
 
+            //Permisos para petros
+            'listar-petros',
+            'crear-petros',
+            'editar-petros',
+            'consultar-petros',
+            'eliminar-petros',
+
         ];
 
         foreach ($permissions as $permission) {

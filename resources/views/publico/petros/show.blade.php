@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Tasas
+    Petros
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('tasas.index') !!}">Tasas</a>
+                    <a href="{!! route('petros.index') !!}">Petros</a>
                 </li>
                 <li class="breadcrumb-item">Consulta</li>
             </ol>
@@ -22,8 +22,8 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <i class="fas fa-percentage"></i>
-                                 <strong>Consultar Tasas</strong>
+                                 <i class="fas fa-coins"></i>
+                                 <strong>Consultar Petros</strong>
                                  <div class="card-header-actions">
                                  </div>
                              </div>
@@ -33,7 +33,7 @@
                                          <div class="row">
                                              <div class="col-md-3"></div>
                                              <div class="col-md-6 p-0 border rounded">
-                                 @include('publico.tasas.show_fields')
+                                 @include('publico.petros.show_fields')
                                              </div>
                                          </div>
                                      </div>

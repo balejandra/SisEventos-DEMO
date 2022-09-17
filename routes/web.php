@@ -74,6 +74,9 @@ Route::middleware(['auth' , 'verified'])->group(function () {
 
     Route::resource('tasas', \App\Http\Controllers\Publico\TasaController::class);
 
+    Route::resource('petros', App\Http\Controllers\Publico\PetroController::class);
+
+
 });
 
 

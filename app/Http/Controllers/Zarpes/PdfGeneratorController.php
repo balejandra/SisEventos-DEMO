@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Gmar\LicenciasTitulosGmar;
 use App\Models\Publico\Departamento;
 use App\Models\Renave\Renave_data;
+use App\Models\SATIM\PagoEvento;
 use App\Models\Transaccion;
 use App\Models\SATIM\Pasajero;
 use App\Models\SATIM\AutorizacionEvento;
@@ -117,9 +118,17 @@ class PdfGeneratorController extends Controller
 
     public function correoEvento($id){
        $estadia=AutorizacionEvento::find($id);
-        $pdf=PDF::loadView('PDF.autorizacion.evento', compact('estadia'))->stream();
+       $pago=PagoEvento::where('autorizacion_evento_id',$id)->first();
+        $pdf=PDF::loadView('PDF.autorizacion.evento', compact('estadia','pago'))->stream();
         return $pdf;
 
+    }
+
+    public function imprimirEvento($id){
+        $estadia=AutorizacionEvento::find($id);
+        $pago=PagoEvento::where('autorizacion_evento_id',$id)->first();
+        $pdf=PDF::loadView('PDF.autorizacion.evento',compact('estadia','pago'));
+        return $pdf->stream('evento.pdf');
     }
 
     public function imprimirInternacional($id){

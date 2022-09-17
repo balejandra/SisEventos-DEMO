@@ -63,7 +63,7 @@ class TasaController extends Controller
 
         $tasa = $this->tasaRepository->create($input);
 
-        Flash::success('Tasa saved successfully.');
+        Flash::success('Tasa guardada satisfactoriamente.');
 
         return redirect(route('tasas.index'));
     }
@@ -80,7 +80,7 @@ class TasaController extends Controller
         $tasa = $this->tasaRepository->find($id);
 
         if (empty($tasa)) {
-            Flash::error('Tasa not found');
+            Flash::error('Tasa no encontrada');
 
             return redirect(route('tasas.index'));
         }
@@ -100,7 +100,7 @@ class TasaController extends Controller
         $tasa = $this->tasaRepository->find($id);
 
         if (empty($tasa)) {
-            Flash::error('Tasa not found');
+            Flash::error('Tasa no encontrada');
 
             return redirect(route('tasas.index'));
         }
@@ -121,14 +121,14 @@ class TasaController extends Controller
         $tasa = $this->tasaRepository->find($id);
 
         if (empty($tasa)) {
-            Flash::error('Tasa not found');
+            Flash::error('Tasa no encontrada');
 
             return redirect(route('tasas.index'));
         }
 
         $tasa = $this->tasaRepository->update($request->all(), $id);
 
-        Flash::success('Tasa updated successfully.');
+        Flash::success('Tasa actualizada satisfactoriamente.');
 
         return redirect(route('tasas.index'));
     }
@@ -147,14 +147,14 @@ class TasaController extends Controller
         $tasa = $this->tasaRepository->find($id);
 
         if (empty($tasa)) {
-            Flash::error('Tasa not found');
+            Flash::error('Tasa no encontrada');
 
             return redirect(route('tasas.index'));
         }
 
         $this->tasaRepository->delete($id);
 
-        Flash::success('Tasa deleted successfully.');
+        Flash::success('Tasa eliminada satisfactoriamente.');
 
         return redirect(route('tasas.index'));
     }

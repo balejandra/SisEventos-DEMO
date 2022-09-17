@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section("titulo")
-    Tasas
+    Autorización
 @endsection
 @section('content')
     <div class="header-divider"></div>
@@ -8,9 +8,9 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('tasas.index') !!}">Tasas</a>
+                    <a href="{{ route('autorizacionEventos.index') }}">Autorización Eventos</a>
                 </li>
-                <li class="breadcrumb-item">Consulta</li>
+                <li class="breadcrumb-item active">Consulta</li>
             </ol>
         </nav>
     </div>
@@ -22,22 +22,15 @@
                      <div class="col-lg-12">
                          <div class="card">
                              <div class="card-header">
-                                 <i class="fas fa-percentage"></i>
-                                 <strong>Consultar Tasas</strong>
+                                 <i class="fas fa-umbrella-beach"></i>
+                                 <strong>Consultar Autorización Eventos</strong>
                                  <div class="card-header-actions">
+                                     <a href="{{route('eventosPorPagar.index')}} "
+                                        class="btn btn-primary btn-sm">Cancelar</a>
                                  </div>
                              </div>
                              <div class="card-body">
-                                 <div class="my-2">
-                                     <div class="container">
-                                         <div class="row">
-                                             <div class="col-md-3"></div>
-                                             <div class="col-md-6 p-0 border rounded">
-                                 @include('publico.tasas.show_fields')
-                                             </div>
-                                         </div>
-                                     </div>
-                                 </div>
+                                 @include('autorizacion_eventos.show_fields')
                              </div>
                          </div>
                      </div>

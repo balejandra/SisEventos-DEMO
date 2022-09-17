@@ -144,6 +144,30 @@
 
     <br>
 
+    <strong>Pagos</strong>
+    <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
+        <thead>
+        <tr>
+            <th>Monto Pagar en Petro</th>
+            <th>Monto Pagar en Bolivares</th>
+            <th>Forma de Pago</th>
+            <th>Codigo Transaccion</th>
+            <th>Fecha de Pago</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach($pagos as $pago)
+            <tr>
+                <td>{{$pago->monto_pagar_petros}}</td>
+                <td>{{$pago->monto_pagar_bolivares}}</td>
+                <td>{{$pago->forma_pago}}</td>
+                <td>{{$pago->codigo_transaccion}}</td>
+                <td>{{$pago->fecha_pago}}</td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+    <br>
     <strong>Historial de Revisiones</strong>
     <table class="table table-hover nooptionsearch border table-grow" style="width: 100%">
         <thead>
