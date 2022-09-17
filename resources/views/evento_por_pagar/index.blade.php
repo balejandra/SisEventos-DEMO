@@ -1,15 +1,13 @@
 @extends('layouts.app')
 @section("titulo")
-    Tasas
+    Autorización
 @endsection
 @section('content')
     <div class="header-divider"></div>
     <div class="container-fluid">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
-                <li class="breadcrumb-item">
-                    Tasas
-                </li>
+                <li class="breadcrumb-item">Ordenes de Pago</li>
             </ol>
         </nav>
     </div>
@@ -21,16 +19,12 @@
                  <div class="col-lg-12">
                      <div class="card">
                          <div class="card-header">
-                             <i class="fas fa-percentage"></i>
-                             <strong>Tasas</strong>
-                             @can('crear-tasas')
-                                 <div class="card-header-actions">
-                                     <a class="btn btn-primary btn-sm"  href="{{ route('tasas.create') }}">Nuevo</a>
-                                 </div>
-                             @endcan
+                             <i class="fas fa-umbrella-beach"></i>
+                             <strong>Solicitud de Autorización Eventos Por Pagar</strong>
+
                          </div>
                          <div class="card-body">
-                             @include('publico.tasas.table')
+                             @include('evento_por_pagar.table')
                               <div class="pull-right mr-3">
 
                               </div>

@@ -172,7 +172,7 @@
         <img class="img-rounded" height="100px" src="{{ public_path('images/inea.png') }}">
     </div>-->
 
-    <div style="position:fixed;padding-top: 40pt; left: 420pt;">
+    <div style="position:fixed;padding-top: 120pt; left: 420pt;">
         @php
             $QR =
                 "Nro Solicitud: ".$estadia->nro_solicitud."\n".
@@ -180,13 +180,12 @@
                 "Fecha Evento: ".$estadia->fecha."\n".
                 "Hora Evento: " .$estadia->hora."\n".
                 "Lugar Evento: " .$estadia->lugar."\n".
-                "Fecha Emision: " .$estadia->updated_at."\n".
-
+                "Fecha Emision: " .$estadia->updated_at."\n"
         @endphp
 
         <img src="data:image/png;base64, {!! base64_encode(QrCode::size(100)->generate($QR)) !!} ">
     </div>
-    <div style="padding-top:20pt; padding-left:130pt;">
+    <div style="padding-top:50pt; padding-left:130pt;">
         <p class=" text-center mbr-text display-7">
             REPÚBLICA BOLIVARIANA DE VENEZUELA<br>
             <br>
@@ -204,82 +203,50 @@
         <table>
             <thead>
             <tr>
-                <th>NOMBRE DEL BUQUE <br>Vessel'sname</th>
-                <th>NÚMERO DE REGISTRO <br>Number of Register</th>
-                <th>TIPO DE BUQUE <br>Type of ship</th>
-                <th>NACIONALIDAD DEL BUQUE <br>Ship flag</th>
-                <th>PROPIETARIO <br>Ship Owner</th>
-                <th>NOMBRE DEL CAPITÁN <br>Captain's name</th>
+                <th>NOMBRE DEL EVENTO</th>
+                <th>FECHA EVENTO</th>
+                <th>HORARIO DEL EVENTO</th>
+                <th>LUGAR DEL EVENTO</th>
+                <th>NOMBRE CONTACTO</th>
+                <th>TELEFONO CONTACTO</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td>{{$estadia->nombre_buque}}</td>
-                <td>{{$estadia->nro_registro}}</td>
-                <td style="text-transform: capitalize">{{$estadia->tipo_buque}}</td>
-                <td>{{$estadia->nacionalidad_buque}}</td>
-                <td>{{$estadia->nombre_propietario}}</td>
-                <td>{{$estadia->nombre_capitan}}</td>
+                <td>{{$estadia->nombre_evento}}</td>
+                <td>{{$estadia->fecha}}</td>
+                <td>{{$estadia->horario}}</td>
+                <td>{{$estadia->lugar}}</td>
+                <td>{{$estadia->nombre_contacto}}</td>
+                <td>{{$estadia->telefono_contacto    }}</td>
+            </tr>
+            <tr><td colspan="6"></td></tr>
+            <tr>
+                <th colspan="2">CONCEPTO</th>
+                <th COLSPAN="2">MONTO EN PETROS</th>
+                <th colspan="2">MONTO EN BOLIVARES</th>
             </tr>
             <tr>
-                <th>PASAPORTE <br>Passport Nro</th>
-                <th>ESLORA <br>Lenght (mts.)</th>
-                <th>MANGA <br>Breadth (mts.)</th>
-                <th>PUNTAL <br>Depth (mts.)</th>
-                <th>ARQUEO BRUTO <br>Gross Tonnage</th>
-                <th>POTENCIA MOTORES (KW) <br>Motor Power (kw)</th>
+                <td colspan="2">Pago por realizar {{$estadia->nombre_evento}}</td>
+                <td colspan="2">{{$pago->monto_pagar_petros}}</td>
+                <td colspan="2">{{$pago->monto_pagar_bolivares}}</td>
+            </tr>
+            <tr><td colspan="6"></td>
             </tr>
             <tr>
-                <td>{{$estadia->pasaporte_capitan}}</td>
-                <td>{{$estadia->eslora}}</td>
-                <td>{{$estadia->manga}}</td>
-                <td>{{$estadia->puntal}}</td>
-                <td>{{$estadia->arqueo_bruto}}</td>
-                <td>{{$estadia->potencia_kw}}</td>
+<td colspan="6"></td>
             </tr>
             <tr>
-                <th>ACTIVIDADES A REALIZAR<br>Ship’s purpose</th>
-                <th>NÚMERO DE TRIPULANTES <br>Number of Crew members</th>
-                <th>NÚMERO DE PASAJEROS <br>Number of Passengers</th>
-                <th colspan="2">PROCEDENCIA <br>Port of origin</th>
-                <th>ZARPE ÚLTIMO PUERTO <br>Last port</th>
-            </tr>
-            <tr>
-                <td style="text-transform: capitalize">{{$estadia->actividades}}</td>
-                <td>{{$estadia->cant_tripulantes}}</td>
-                <td>{{$estadia->cant_pasajeros}}</td>
-                <td colspan="2">{{$estadia->puerto_origen}}</td>
-                <td>{{$estadia->ultimo_puerto_zarpe}}</td>
+                <th colspan="4">TOTAL A PAGAR</th>
+                <th colspan="2">{{$pago->monto_pagar_bolivares}}</th>
 
             </tr>
-            <tr>
-                <th colspan="2">DESTINO <br>Port of destination</th>
-                <th colspan="2">EN LA MARINA DE<br>Nautical Club</th>
-                <th>FECHA DE ARRIBO <br>Arrival Date</th>
-                <th>TIEMPO DE ESTADÍA <br>Permanency</th>
-
-            </tr>
-            <tr>
-                <td colspan="2">{{$estadia->capitania->nombre}}</td>
-                <td colspan="2">{{$estadia->establecimientos->nombre}}</td>
-                <td>{{date_format($estadia->fecha_arribo,'d-m-Y')}}</td>
-                <td>{{$estadia->tiempo_estadia}}</td>
-            </tr>
-            <tr>
-                <td colspan="3">VÁLIDO DESDE / Valid since: {{date_format($estadia->updated_at,'d-m-Y')}}</td>
-                <td colspan="3">VÁLIDO HASTA / Valid until: {{date_format($estadia->vencimiento,'d-m-Y')}}</td>
-            </tr>
-            </tbody>
         </table>
 
         <p class="mbr-text mbr-fonts-style display-7 content-paragraph">Lugar y fecha
             <u> {{date_format($estadia->updated_at,'d-m-Y')}} </u><br>
-                PLACE AND DATE <u>  {{date_format($estadia->updated_at,'d-m-Y')}} </u>
         </p>
         <br>
-        <p class="mbr-text text-center mbr-fonts-style display-7">Capitán de Puerto<br>
-                HARBOUR MASTE
-        </p>
     </div>
 </main>
 </body>

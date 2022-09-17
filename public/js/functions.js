@@ -2250,10 +2250,10 @@ function EstablecimientoUser(){
 }
 
 function modalvisita(id,solicitud) {
-    var soli = document.getElementById('solicitud');
+    var soli = document.getElementById('pago');
     soli.textContent = solicitud
     let frm1 = document.getElementById('visita');
-    frm1.setAttribute('action',  route('statusEstadia', {id:id,status:9}));
+    frm1.setAttribute('action',  route('updateStatus', {id:id,status:4}));
 }
 
 function modalaprobacion(id,solicitud) {

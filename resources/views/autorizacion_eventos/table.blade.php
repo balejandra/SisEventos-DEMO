@@ -47,7 +47,7 @@
                         @can('aprobar-evento')
                             @if ($autorizacionEvento->status_id===3)
                                 <a class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#aprobacion" data-toggle="tooltip"
-                                   data-bs-placement="bottom" title="Asignar Visitador"
+                                   data-bs-placement="bottom" title="Aprobar Evento"
                                    onclick="modalaprobacion({{$autorizacionEvento->id}},'{{$autorizacionEvento->nro_solicitud}}');">
                                     <i class="fa fa-check"></i>
                                 </a>
@@ -56,19 +56,27 @@
                         @can('rechazar-evento')
                             @if (($autorizacionEvento->status_id===3)  )
                             <!-- Button trigger modal -->
-                                <a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-toggle="tooltip"
+                                <a class="btn btn-danger btn-sm" data-bs-toggle="modal" data-toggle="tooltip" title="Rechazar Evento"
                                    data-bs-placement="bottom" data-bs-target="#modal-rechazar" onclick="modalrechazarestadia({{$autorizacionEvento->id}},'{{$autorizacionEvento->nro_solicitud}}')">
                                     <i class="fa fa-ban"></i>
                                 </a>
                             @endif
                         @endcan
-                        @can('aprobar-pago')
-                            @if (($autorizacionEvento->status_id===1)  )
-                            <!-- Button trigger modal -->
-                                <a class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#modal" data-toggle="tooltip"
-                                   data-bs-placement="bottom" title="Asignar Visitador"
-                                   onclick="modalvisita({{$autorizacionEvento->id}},'{{$autorizacionEvento->nro_solicitud}}');">
-                                    <i class="fas fa-user-clock"></i>
+                        @if (($autorizacionEvento->status_id===1) || ($autorizacionEvento->status_id===4) )
+                        <a class="btn btn-sm btn-dark"
+                           href="{{route('eventopdf',$autorizacionEvento->id)}}"
+                           target="_blank" data-toggle="tooltip"
+                           data-bs-placement="bottom"
+                           title="Descargar PDF">
+                            <i class="fas fa-file-pdf"></i>
+                        </a>
+                        @endif
+                        @can('anular-eventoUsuario')
+                            @if ($autorizacionEvento->status->id==1 || ($autorizacionEvento->status_id===3))
+                                <a class="btn btn-sm btn-danger confirmation"
+                                   data-route="{{route('updateStatus',[$autorizacionEvento->id,6])}}" data-toggle="tooltip"
+                                   data-bs-placement="bottom" title="Anular Solicitud" data-action="ANULAR" >
+                                    <i class="fas fa-window-close"></i>
                                 </a>
                             @endif
                         @endcan
@@ -140,41 +148,3 @@
         </div>
     </form>
 </div>
-
-<!-- Modal PAGO PUNTO -->
-<div class="modal fade" id="modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-     aria-hidden="true">
-    <form id="visita" action="" class="modal-form">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Pago por Punto</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Por favor llene los datos necesarios para el pago de la solicitud Nro. <span id="solicitud"></span></p>
-                    <div class="row">
-                        <div class="form-group col-sm-6">
-                            {!! Form::label('visitador', 'Nombres y Apellidos del Visitador:') !!}
-                            {!! Form::text('visitador', null, ['class' => 'form-control', 'required']) !!}
-                        </div>
-                        @php
-                            $fechaActual=new DateTime();
-                            $fechaActual->setTimeZone(new DateTimeZone('America/Caracas'));
-                            $fechaActual=$fechaActual->format('Y-m-d');
-                        @endphp
-                        <div class="form-group col-sm-6">
-                            {!! Form::label('fecha_visita', 'Fecha de Visita:') !!}
-                            <input type="date" name="fecha_visita" id="fecha_visita"  class="form-control" min="{{$fechaActual}}" max="9999-12-31" required>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-primary" data-action="ASIGNAR VISITA">Asignar</button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>
-
