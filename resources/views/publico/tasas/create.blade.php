@@ -8,7 +8,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb my-0 ms-2">
                 <li class="breadcrumb-item">
-                    <a href="{!! route('tasas.index.index') !!}">Tasas</a>
+                    <a href="{!! route('tasas.index') !!}">Tasas</a>
                 </li>
                 <li class="breadcrumb-item">Crear</li>
             </ol>

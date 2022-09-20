@@ -81,6 +81,7 @@ class EventoPorPagarController extends Controller{
         $autorizacionEvento = $this->autorizacionEventoRepository->find($id);
         $documentos = DocumentoAutorizacion::where('autorizacion_evento_id', $id)->get();
         $revisiones=RevisionAutorizacion::where('autorizacion_evento_id',$id)->get();
+        $pagos=PagoEvento::where('autorizacion_evento_id',$id)->get();
 
         if (empty($autorizacionEvento)) {
             Flash::error('Autorizacion Evento not found');
@@ -91,7 +92,8 @@ class EventoPorPagarController extends Controller{
         return view('evento_por_pagar.show')
             ->with('autorizacionEvento', $autorizacionEvento)
             ->with('documentos', $documentos)
-            ->with('revisiones',$revisiones);
+            ->with('revisiones',$revisiones)
+            ->with('pagos',$pagos);
     }
 
     /**
